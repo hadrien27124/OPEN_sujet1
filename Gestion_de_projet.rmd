@@ -3,3 +3,7 @@
 # CONSIGNES : Pour une association mettre les participants d'une association sur une carte (adresses, coordonnées). Mettre un pop-up avec des infos de l'adhérent sur la carte. Enrichissement : fichier avec adhérents actuels. Rajouter une partie de l'app qui utilise les données par défaut ou utilisation de nouvelles données (à rentrer). Onglet avec informations sur l'association.
 
 # Implémenter la carte
+# Implémenter un fichier de base de données avec nom, adresse et coordonnées de carte (amélioration = adresse switch en coordonnées)
+# Bouton pop-up avec les personnes
+# Bouton avec la fiche d'information association
+# Amélioration = bouton d'entrée des coordonnées
