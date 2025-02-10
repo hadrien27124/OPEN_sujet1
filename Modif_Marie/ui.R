@@ -23,7 +23,7 @@ ui <- fluidPage(
     .nav-tabs > li.active > a {
       background-color: mediumseagreen !important;
       color: white !important;
-      border-bottom: 3px solid red;
+      border-bottom: 3px solid red !important; /* Garder la barre rouge après le clic */
     }
 
     /* Modifier l'onglet au survol */
@@ -90,7 +90,7 @@ ui <- fluidPage(
     
     tabPanel("Carte", 
              tags$div("Carte interactive", id = "carte"),
-             leafletOutput("map")
+             leafletOutput("map", height = "600px")
     ),
     
     tabPanel("Contact", 
