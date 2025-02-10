@@ -7,3 +7,5 @@
 # Bouton pop-up avec les personnes
 # Bouton avec la fiche d'information association
 # Amélioration = bouton d'entrée des coordonnées
+
+#modif de Sofiane
