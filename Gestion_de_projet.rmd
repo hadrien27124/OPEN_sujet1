@@ -15,7 +15,7 @@ toc: true
 toc_depth: 3
 toc_float:
   collapsed: true
-smooth_scroll: true
+smooth_scroll: true 
 ---
 
 # Open sujet 1 : Gestion de projet - Objectif
