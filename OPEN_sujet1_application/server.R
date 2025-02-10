@@ -7,15 +7,27 @@ library(writexl)
 
 # Charger le fichier Excel
 
-chemin_fichier <- "Base_de_données.xlsx"
-df <- read_excel(chemin_fichier)
+df <- read_excel("Base_de_données.xlsx")
 
-# Géocodage avec OpenStreetMap pour ajouter les colonnes lat et long
+# Vérifier si la colonne 'Adresse' existe
+if (!"Adresse" %in% colnames(df)) {
+  stop("La colonne 'Adresse' n'existe pas dans le fichier Excel.")
+}
+
+# Si les colonnes 'lat' et 'long' n'existent pas, les créer
+if (!"lat" %in% colnames(df)) {
+  df$lat <- NA
+}
+if (!"long" %in% colnames(df)) {
+  df$long <- NA
+}
+
+# Vérifier les lignes où 'lat' et 'long' sont NA (c'est-à-dire où ces colonnes sont vides)
 df <- df %>%
-  geocode(address = Adresse, method = "osm")
-
-# Vérifier les noms des colonnes pour s'assurer que lat et long ont été ajoutées
-print(colnames(df))
+  mutate(
+    lat = ifelse(is.na(lat) & is.na(long), geocode(address = Adresse, method = "osm")$lat, lat),
+    long = ifelse(is.na(lat) & is.na(long), geocode(address = Adresse, method = "osm")$long, long)
+  )
 
 # Sauvegarder le dataframe mis à jour avec lat et long dans le même fichier Excel
 write_xlsx(df, "Base_de_données.xlsx")
