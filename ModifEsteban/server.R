@@ -2,7 +2,7 @@ library(shiny)
 library(readxl)
 library(leaflet)
 library(dplyr)
-
+ 
 # Charger la base de données
 df <- read_excel("../OPEN_sujet1_application/Base_de_données.xlsx")
 
