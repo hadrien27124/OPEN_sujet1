@@ -7,6 +7,9 @@ library(dplyr)
 
 ui <- fluidPage(
   
+  # Titre de l'application en utilisant la police précédemment choisie
+  titlePanel(tags$div("Répartition des membres d'une association en France", id = "Titre1")),
+  
   tabsetPanel(
     
     tabPanel("Présentation", 
