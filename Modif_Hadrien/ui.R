@@ -4,7 +4,6 @@ library(leaflet)
 library(tidygeocoder)
 library(dplyr)
 
-
 ui <- fluidPage(
   
   # Modification de la police et du style des onglets
@@ -24,10 +23,10 @@ ui <- fluidPage(
     .nav-tabs > li.active > a {
       background-color: mediumseagreen !important;
       color: white !important;
-      border-bottom: 3px solid red !important; /* Garder la barre rouge après le clic */
+      border-bottom: 3px solid red !important;
     }
 
-    /* Modifier l'onglet au survol */
+    /* Modifier l'onglet en survolant */
     .nav-tabs > li > a:hover {
         background-color: lightgray;
         color: black;
@@ -35,32 +34,32 @@ ui <- fluidPage(
 
     /* Modifier la barre de fond et l'ombre des onglets */
     .nav-tabs {
-        border-bottom: 2px solid #ccc; /* Légère bordure en bas */
+        border-bottom: 2px solid #ccc; /* bordure en bas */
     }
     
     .nav-tabs > li > a {
-        border: 1px solid #ccc; /* Ajoute un contour fin */
-        box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Ajoute une ombre légère */
+        border: 1px solid #ccc; /* contour fin */
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Ajoute une ombre */
     }
     
     /* Arrière-plan de l'application */
     body {
-        background-color: #f5f5f5; /* Gris clair pour un fond doux */
+        background-color: #f5f5f5; /* Gris clair */
     }
     
-    /* Contenu des onglets avec une belle bordure et une ombre */
+    /* Contenu des onglets avec bordure et ombre */
     .tab-content {
         background-color: white;
         padding: 20px;
         border-radius: 10px;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.1); /* Ombre douce */
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.1); /* Ombre */
         margin-top: 10px;
     }
     
     #titre1 {
         font-family: 'Roboto';
         font-size: 40px;
-        color: mediumseagreen; /* Couleur moderne pour le titre */
+        color: mediumseagreen; /* Couleur pour le titre */
         font-weight: bold;
         text-align: center;
         padding-bottom: 10px;
@@ -90,6 +89,14 @@ ui <- fluidPage(
     ),
     
     tabPanel("Carte", 
+             titlePanel("Carte"),
+             # Champs pour entrer les coordonnées
+             numericInput("latitude", "Latitude :", value = 48.8566, min = -90, max = 90),
+             numericInput("longitude", "Longitude :", value = 2.3522, min = -180, max = 180),
+             
+             # Boutons pour ajouter et réinitialiser les marqueurs
+             actionButton("add_marker", "Ajouter un marqueur"),
+             actionButton("reset_map", "Réinitialiser la carte"),
              tags$div("Carte interactive", id = "carte"),
              leafletOutput("map", height = "600px")
     ),
@@ -97,16 +104,10 @@ ui <- fluidPage(
     tabPanel("Contact", 
              tags$div("Informations de contact", id = "contact"),
              
-             tags$div(
-             actionLink("lien_isara","lien isara"),
-             actionLink("lien_isara_insta","Instagram"),
-             actionLink("lien_isara_facebook","Facebook")),
              
              tags$div(
-             tags$a(
-               href = "https://isara.fr/",
-               tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")
-              
-    )
-  )
-)))
+               tags$a(
+                 href = "https://isara.fr/",
+                 tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")
+               )
+             ))))
