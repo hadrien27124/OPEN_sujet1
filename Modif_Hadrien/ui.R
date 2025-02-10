@@ -4,7 +4,6 @@ library(leaflet)
 library(tidygeocoder)
 library(dplyr)
 
-
 ui <- fluidPage(
   
   # Modification de la police et du style des onglets
@@ -98,15 +97,25 @@ ui <- fluidPage(
              tags$div("Informations de contact", id = "contact"),
              
              tags$div(
-             actionLink("lien_isara","lien isara"),
-             actionLink("lien_isara_insta","Instagram"),
-             actionLink("lien_isara_facebook","Facebook")),
+               actionLink("lien_isara","lien isara"),
+               actionLink("lien_isara_insta","Instagram"),
+               actionLink("lien_isara_facebook","Facebook")),
              
              tags$div(
-             tags$a(
-               href = "https://isara.fr/",
-               tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")
-              
-    )
-  )
-)))
+               tags$a(
+                 href = "https://isara.fr/",
+                 tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")
+               )
+             ))))
+
+server <- function(input, output, session) {
+  output$map <- renderLeaflet({
+    leaflet() %>%
+      addTiles() %>%
+      setView(lng = 2.3522, lat = 48.8566, zoom = 12) # Paris par défaut
+    
+    
+  })
+}
+
+shinyApp(ui, server)
