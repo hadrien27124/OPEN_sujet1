@@ -9,17 +9,7 @@ server <- function(input, output, session) {
   output$map <- renderLeaflet({
     leaflet() %>%
     addTiles() %>%
-      setView(lng = 2.3522, lat = 48.8566, zoom = 6) %>%  
-      addMarkers(lng = 2.3522, lat = 48.8566, popup = "Paris") 
-    
-    observeEvent(input$lien_isara,{
-      browseURL("https://isara.fr/")})
-    
-    observeEvent(input$lien_isara_insta,{
-      browseURL("https://isara.fr/")})
-    
-    observeEvent(input$lien_isara_facebook,{
-      browseURL("https://isara.fr/")})
+      setView(lng = 2.3522, lat = 48.8566, zoom = 6)
     
   })
 }
