@@ -1,13 +1,46 @@
-# OPEN SUJET 1 : Gestion de projet
+---
+title: "Répartition des associations en France"
+author: |
+  Hadrien Schmitt, Esteban Faravellon,  
+  Sofiane Bouhamou, Clara Couston,  
+  Juliette Goudaert, Marie Sanchez
+date: "2025-02-10"
+output:
+  pdf_document: default
+  code_folding: hide
+  html_document: null
+fig_caption: true
+number_sections: true
+toc: true
+toc_depth: 3
+toc_float:
+  collapsed: true
+smooth_scroll: true
+---
 
-# CONSIGNES : Pour une association mettre les participants d'une association sur une carte (adresses, coordonnées). Mettre un pop-up avec des infos de l'adhérent sur la carte. Enrichissement : fichier avec adhérents actuels. Rajouter une partie de l'app qui utilise les données par défaut ou utilisation de nouvelles données (à rentrer). Onglet avec informations sur l'association.
+# Open sujet 1 : Gestion de projet - Objectif
 
-# Implémenter la carte
-# Implémenter un fichier de base de données avec nom, adresse et coordonnées de carte (amélioration = adresse switch en coordonnées)
-# Bouton pop-up avec les personnes
-# Bouton avec la fiche d'information association
-# Amélioration = bouton d'entrée des coordonnées
+Notre objectif est de développer une application référençant toutes les associations en France sur une carte interactive du monde. Chaque association disposera d'un pop-up affichant ses informations détaillées.
 
-#modif de Sofiane
+# Consignes
 
-#Modification de Esteban 2
+1- Implémenter la carte (mettre la carte interactive)
+
+2- Implémenter un fichier de base de données avec nom, adresse et coordonnées de carte (amélioration = adresse switch en coordonnées)
+
+3- Bouton pop-up avec les personnes
+
+4- Bouton avec la fiche d'information association
+
+5- Amélioration = bouton d'entrée des coordonnées
+
+6- Esthétique de l'application
+
+# Répartition du travail
+
+1) Hadrien
+2) Clara
+3) Esteban
+4) Marie
+5) Sofiane
+6) Juliette
