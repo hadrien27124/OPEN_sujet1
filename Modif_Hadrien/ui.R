@@ -21,5 +21,5 @@ ui <- fluidPage(
       leafletOutput("map"),
       
     tabPanel(
-      tags$div("Contact", id = "contact"),
+      tags$div("Contact", id = "contact")
 ))))
