@@ -1,12 +1,35 @@
 library(shiny)
+library(readxl)
 library(leaflet)
+library(tidygeocoder)
+library(dplyr)
+library(writexl)
 
+# Charger le fichier Excel
+df <- read_excel("Base_de_données.xlsx")
+
+# Géocodage avec OpenStreetMap pour ajouter les colonnes lat et long
+df <- df %>%
+  geocode(address = Adresse, method = "osm")
+
+# Vérifier les noms des colonnes pour s'assurer que lat et long ont été ajoutées
+print(colnames(df))
+
+# Sauvegarder le dataframe mis à jour avec lat et long dans le même fichier Excel
+write_xlsx(df, "Base_de_données.xlsx")
+
+# Vérifier que les données sont correctement mises à jour
+print(df)  # Voir les résultats
+
+# Création du serveur pour la carte Leaflet
 server <- function(input, output, session) {
   output$map <- renderLeaflet({
-    leaflet() %>%
-      addTiles() %>%
-      setView(lng = 3.59395, lat = 47.3103, zoom = 6) %>%  # Centrage entre Paris et Lyon
-      addMarkers(lng = 2.3522, lat = 48.8566, popup = "Paris") %>%
-      addMarkers(lng = 4.8357, lat = 45.7640, popup = "Lyon")
+    leaflet(df) %>%
+      addTiles() %>%  # Fond de carte
+      addMarkers(
+        lng = ~long,  # Coordonnée longitude
+        lat = ~lat,   # Coordonnée latitude
+        popup = ~paste("<b>", Nom, "</b><br/>", Adresse)  # Pop-up avec Nom + Adresse
+      )
   })
 }
