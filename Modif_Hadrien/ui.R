@@ -22,7 +22,12 @@ ui <- fluidPage(
     ),
     
     tabPanel("Contact", 
-             tags$div("Informations de contact", id = "contact")
+             tags$div("Informations de contact", id = "contact"),
+             
+             tags$div(
+             actionLink("lien_isara","lien isara"),
+             actionLink("lien_isara_insta","Instagram"),
+             actionLink("lien_isara_facebook","Facebook"))
     )
   )
 )
