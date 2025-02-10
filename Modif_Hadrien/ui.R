@@ -27,17 +27,15 @@ ui <- fluidPage(
              tags$div(
              actionLink("lien_isara","lien isara"),
              actionLink("lien_isara_insta","Instagram"),
-             actionLink("lien_isara_facebook","Facebook"))
+             actionLink("lien_isara_facebook","Facebook")),
+             
+             tags$div(
+             tags$a(
+               href = "https://isara.fr/",
+               tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")
+               
+  
+               
     )
   )
-)
-
-server <- function(input, output, session) {
-  output$map <- renderLeaflet({
-    leaflet() %>%
-      addTiles() %>%
-      setView(lng = 2.3522, lat = 48.8566, zoom = 12) # Paris par défaut
-  })
-}
-
-shinyApp(ui, server)
+)))
