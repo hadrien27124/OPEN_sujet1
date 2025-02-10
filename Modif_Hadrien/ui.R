@@ -18,16 +18,6 @@ ui <- fluidPage(
              leafletOutput("map")
     ),
     
-<<<<<<< HEAD
-    tabPanel(
-      tags$div("Carte", id = "map"),
-      titlePanel("Carte"),
-      leafletOutput("map"),
-      
-    tabPanel(
-      tags$div("Contact", id = "contact")
-))))
-=======
     tabPanel("Contact", 
              tags$div("Informations de contact", id = "contact")
     )
@@ -43,4 +33,3 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
->>>>>>> f35f328e5ea9490dc5a0687c0cf1ecfe049c4657
