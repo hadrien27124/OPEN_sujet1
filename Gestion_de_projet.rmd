@@ -1,1 +1,5 @@
 # OPEN SUJET 1 : Gestion de projet
+
+# CONSIGNES : Pour une association mettre les participants d'une association sur une carte (adresses, coordonnées). Mettre un pop-up avec des infos de l'adhérent sur la carte. Enrichissement : fichier avec adhérents actuels. Rajouter une partie de l'app qui utilise les données par défaut ou utilisation de nouvelles données (à rentrer). Onglet avec informations sur l'association.
+
+# Implémenter la carte
