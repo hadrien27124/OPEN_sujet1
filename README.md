@@ -1,4 +1,4 @@
-# Répartition des associations en France
+# Répartition des membres d'une association en France
 
 
 author: Hadrien Schmitt / Esteban Faravellon / Sofiane Bouhamou / Clara Couston / Juliette Goudaert, Marie Sanchez
@@ -9,7 +9,7 @@ date: 2025-02-10
 
 # Open sujet 1 : Gestion de projet - Objectif
 
-Notre objectif est de développer une application référençant toutes les associations en France sur une carte interactive du monde. Chaque association disposera d'un pop-up affichant ses informations détaillées.
+Notre objectif est de développer une application référençant les membres d'une association en France sur une carte interactive du monde. Chaques membres disposera d'un pop-up affichant ses informations détaillées.
 
 # Consignes
 
