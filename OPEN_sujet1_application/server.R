@@ -6,7 +6,9 @@ library(dplyr)
 library(writexl)
 
 # Charger le fichier Excel
-df <- read_excel("Base_de_données.xlsx")
+
+chemin_fichier <- "Base_de_données.xlsx"
+df <- read_excel(chemin_fichier)
 
 # Géocodage avec OpenStreetMap pour ajouter les colonnes lat et long
 df <- df %>%
