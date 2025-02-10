@@ -78,4 +78,4 @@ Livrable attendu : Une application fluide, ergonomique et optimisée.
 - Correction des derniers bugs et vérification des fonctionnalités.
 - Préparation de la présentation du projet.
 
-Livrable attendu : Une application stable, fonctionnelle et prête à être présentée.
+Livrable attendu : Une application stable, fonctionnelle et prête à être présentée
