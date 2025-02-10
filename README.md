@@ -1,24 +1,10 @@
-# OPEN_sujet1
+# Répartition des associations en France
 
 
----
-title: "Répartition des associations en France"
-author: |
-  Hadrien Schmitt, Esteban Faravellon,  
-  Sofiane Bouhamou, Clara Couston,  
-  Juliette Goudaert, Marie Sanchez
-date: "2025-02-10"
-output:
-  pdf_document: default
-  code_folding: hide
-  html_document: null
-fig_caption: true
-number_sections: true
-toc: true
-toc_depth: 3
-toc_float:
-  collapsed: true
-smooth_scroll: true 
+author: Hadrien Schmitt / Esteban Faravellon / Sofiane Bouhamou / Clara Couston / Juliette Goudaert, Marie Sanchez
+
+date: 2025-02-10
+
 ---
 
 # Open sujet 1 : Gestion de projet - Objectif
