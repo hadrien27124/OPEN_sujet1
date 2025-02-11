@@ -104,11 +104,14 @@ ui <- fluidPage(
     tabPanel("Administrateur", 
              tags$div("Espace Administrateur", id = "administrateur"),
              tags$div("Interface réservée aux administrateurs", 
-                      style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"),
+                      style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
+             ),
              textInput("admin_id", "Identifiant :", ""),
              passwordInput("admin_pass", "Mot de passe :"),
              actionButton("admin_login", "Se connecter", 
-                          style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+                          style = "margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"
+             ),
+             textOutput("login_message")  # pour afficher le message
     ),
     
     tabPanel("Contact", 
