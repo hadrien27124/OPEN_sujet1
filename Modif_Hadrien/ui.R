@@ -104,6 +104,17 @@ ui <- fluidPage(
     tabPanel("Contact", 
              tags$div("Informations de contact", id = "contact"),
              
+             # Création d'un formulaire
+             fluidRow(
+               column(6, offset = 3,
+                      textInput("name", "Nom :", ""),
+                      textInput("email", "Email :", ""),
+                      textAreaInput("message", "Message :", "", rows = 4),
+                      actionButton("send", "Envoyer", 
+                                   style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+               )
+             ),
+             
              
              tags$div(
                "Suivez-nous sur nos réseaux sociaux:", 
