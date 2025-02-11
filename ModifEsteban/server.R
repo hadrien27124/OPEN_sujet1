@@ -6,9 +6,8 @@ library(dplyr)
 # Charger la base de données
 df <- read_excel("Base_de_données.xlsx")
 
-# Renommer les colonnes GPS correctement
-df <- df %>%
-  rename(lat = `lat...4`, long = `long...5`)
+# Vérifier les noms des colonnes
+print(names(df))  # Pour vérifier si les colonnes sont bien "lat" et "long"
 
 # Serveur Shiny
 server <- function(input, output, session) {
@@ -26,3 +25,7 @@ server <- function(input, output, session) {
       )
   })
 }
+
+
+
+
