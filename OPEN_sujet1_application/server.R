@@ -45,7 +45,10 @@ server <- function(input, output, session) {
       addMarkers(
         lng = ~long,  # Coordonnée longitude
         lat = ~lat,   # Coordonnée latitude
-        popup = ~paste("<b>", Nom, "</b><br/>", Adresse))  # Pop-up avec Nom + Adresse
+        popup = ~paste0(
+          "<b>📌 Nom :</b> ", df$Nom, "<br>",
+          "<b>🙍 Prénom :</b> ", df$Prénom, "<br>",
+          "<b>📍 Adresse :</b> ", df$Adresse ))
   })
   
   # Mise à jour des marqueurs
