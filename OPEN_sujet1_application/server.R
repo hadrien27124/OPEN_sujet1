@@ -109,9 +109,21 @@ server <- function(input, output, session) {
     markers(rbind(markers(), new_marker))  # Ajout du nouveau marqueur
   })
   
-  # Réinitialiser la carte (supprimer tous les marqueurs)
+  # Réinitialiser la carte (afficher tous les marqueurs avec leurs coordonnées)
   observeEvent(input$reset_map, {
-    markers(data.frame(lng = numeric(), lat = numeric()))  # Réinitialisation des marqueurs
+    # Effacer les marqueurs existants
+    leafletProxy("map") %>%
+      clearMarkers() %>%
+      addMarkers(data = df, 
+                 lng = ~long, 
+                 lat = ~lat, 
+                 popup = ~paste0(
+                   "<b>📌 Nom :</b> ", df$Nom, "<br>",
+                   "<b>🙍 Prénom :</b> ", df$Prénom, "<br>",
+                   "<b>📍 Adresse :</b> ", df$Adresse, "<br>",
+                   "<b>📍 Coordonnée Longitude :</b> ", df$long, "<br>",
+                   "<b>📍 Coordonnée Latitude :</b> ", df$lat
+                 ))
   })
   
   #Affichage de la carte
