@@ -104,10 +104,36 @@ ui <- fluidPage(
     tabPanel("Contact", 
              tags$div("Informations de contact", id = "contact"),
              
+             # Création d'un formulaire
+             fluidRow(
+               column(6, offset = 3,
+                      textInput("name", "Nom :", ""),
+                      textInput("email", "Email :", ""),
+                      textAreaInput("message", "Message :", "", rows = 4),
+                      actionButton("send", "Envoyer", 
+                                   style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+               )
+             ),
+             
              
              tags$div(
+               "Suivez-nous sur nos réseaux sociaux:", 
+               style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
+             ),
+             
+             tags$div(
+               style = "text-align: center; margin-top: 10px;",
+               
                tags$a(
                  href = "https://isara.fr/",
                  tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")
+               ),
+               tags$a(
+                 href = "https://www.instagram.com/isara_lyonavignon/?hl=fr",
+                 tags$img(src = "instagram.png", style = "width: 50px; height:50px;")
+               ),
+               tags$a(
+                 href = "https://fr.linkedin.com/school/isara-lyonavignon/",
+                 tags$img(src = "linkedin.png", style = "width: 70px; height:70px;")
                )
              ))))
