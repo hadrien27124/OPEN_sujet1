@@ -66,7 +66,8 @@ server <- function(input, output, session) {
     
     if (nrow(user) == 1) {
       output$login_message <- renderText("Connexion réussie. Bienvenue!")
-      # Ici, vous pouvez ajouter le code pour afficher le contenu réservé aux administrateurs
+      updateTextInput(session, "admin_id", value = "")
+      updateTextInput(session, "admin_pass", value = "")
     } else {
       output$login_message <- renderText("Identifiant ou mot de passe incorrect.")
     }
