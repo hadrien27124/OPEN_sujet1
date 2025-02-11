@@ -145,6 +145,10 @@ server <- function(input, output, session) {
   # Charger les données existantes depuis le fichier Excel
   df_messages <- load_data()
   
+  is_valid_email <- function(email) {
+    grepl("^[[:alnum:]._%+-]+@[[:alnum:]-]+\\.[[:alpha:]]{2,}$", email)
+  }
+  
   observeEvent(input$send, {
     if (input$name == "" || input$email == "" || input$message == "") {
       showModal(modalDialog(
@@ -153,6 +157,14 @@ server <- function(input, output, session) {
         easyClose = TRUE,
         footer = modalButton("OK")
       ))
+    } else if (!is_valid_email(input$email)) {  # Vérifie l'e-mail
+      showModal(modalDialog(
+        title = "Adresse e-mail invalide ❌",
+        "Veuillez entrer une adresse e-mail valide (ex: exemple@isara.com).",
+        easyClose = TRUE,
+        footer = modalButton("OK")
+      ))
+      
     } else {
       # Créer un dataframe avec des colonnes distinctes
       new_message <- data.frame(
