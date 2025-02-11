@@ -106,6 +106,13 @@ ui <- fluidPage(
              
              
              tags$div(
+               "Suivez-nous sur nos réseaux sociaux:", 
+               style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
+             ),
+             
+             tags$div(
+               style = "text-align: center; margin-top: 10px;",
+               
                tags$a(
                  href = "https://isara.fr/",
                  tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")
