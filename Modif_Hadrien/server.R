@@ -84,7 +84,12 @@ server <- function(input, output, session) {
     
     observeEvent(input$send, {
       if (input$name == "" || input$email == "" || input$message == "") {
-        output$confirm <- renderText("⚠️ Veuillez remplir tous les champs.")
+        showModal(modalDialog(
+          title = "Erreur ⚠️",
+          "Veuillez remplir tous les champs avant d'envoyer le message.",
+          easyClose = TRUE,
+          footer = modalButton("OK")
+        ))
       } else {
         # Créer un dataframe avec des colonnes distinctes
         new_message <- data.frame(
@@ -116,9 +121,20 @@ server <- function(input, output, session) {
         # Sauvegarder le fichier Excel avec les colonnes distinctes
         save_data(all_messages)  # Sauvegarder dans le fichier Excel
         
-        # Message de confirmation
-        output$confirm <- renderText("✅ Message envoyé avec succès !")
-      }
+        
+        # Réinitialisation des champs du formulaire
+        updateTextInput(session, "name", value = "")
+        updateTextInput(session, "email", value = "")
+        updateTextAreaInput(session, "message", value = "")
+        
+        showModal(modalDialog(
+          title = "Message envoyé ✅",
+          "Votre message a bien été envoyé. Nous vous répondrons bientôt !",
+          easyClose = TRUE,
+          footer = modalButton("OK") 
+        ))
+        
+         }
     })
   })
 }
