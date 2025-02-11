@@ -76,24 +76,6 @@ server <- function(input, output, session) {
           "<b>🙍 Prénom :</b> ", df$Prénom, "<br>",
           "<b>📍 Adresse :</b> ", df$Adresse ))
   })
-  observeEvent(input$selected_person, {
-    selected_data <- df[df$Nom == input$selected_person, ]
-    
-    if (nrow(selected_data) > 0) {
-      leafletProxy("map") %>%
-        clearMarkers() %>%
-        addMarkers(
-          lng = selected_data$long,
-          lat = selected_data$lat,
-          popup = paste0(
-            "<b>📌 Nom :</b> ", selected_data$Nom, "<br>",
-            "<b>🙍 Prénom :</b> ", selected_data$Prénom, "<br>",
-            "<b>📍 Adresse :</b> ", selected_data$Adresse
-          )
-        )
-    }
-  })
-  
   
   observeEvent(input$selected_person, {
     selected_data <- df[df$Nom == input$selected_person, ]

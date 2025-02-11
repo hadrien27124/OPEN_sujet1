@@ -4,6 +4,8 @@ library(leaflet)
 library(tidygeocoder)
 library(dplyr)
 
+df <- read_excel("Base_de_données.xlsx")
+
 ui <- fluidPage(
   
   # Modification de la police et du style des onglets
