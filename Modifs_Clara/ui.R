@@ -3,14 +3,16 @@ library(readxl)
 library(leaflet)
 library(tidygeocoder)
 library(dplyr)
-  
+
+df <- read_excel("Base_de_données.xlsx")
+
 ui <- fluidPage(
   
   # Modification de la police et du style des onglets
   tags$style(HTML("
     /* Modifier la barre d'onglets */
     .nav-tabs > li > a {
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Roboto';
         font-size: 18px;
         font-weight: bold;
         color: white;
@@ -45,7 +47,6 @@ ui <- fluidPage(
     /* Arrière-plan de l'application */
     body {
         background-color: #f5f5f5; /* Gris clair */
-        font-family: 'Roboto', sans-serif; /* Police uniforme */
     }
     
     /* Contenu des onglets avec bordure et ombre */
@@ -58,7 +59,7 @@ ui <- fluidPage(
     }
     
     #titre1 {
-        font-family: 'Roboto', sans-serif; /* Police uniforme */
+        font-family: 'Roboto';
         font-size: 40px;
         color: mediumseagreen; /* Couleur pour le titre */
         font-weight: bold;
@@ -67,28 +68,18 @@ ui <- fluidPage(
         border-bottom: 3px solid mediumseagreen;
     }
 
-    #bienvenue {
-        font-weight: bold;
+    #presentation, #carte, #contact, #administrateur {
+        font-family: 'Roboto';
+        font-size: 25px;
+        color: black;
+        font-weight: 600;
         text-align: center;
-        font-size: 30px;
-    }
-    
-    #presentation-italic {
-        font-style: italic;
-        text-align: center;
-        font-size: 18px;
-        font-weight: normal;
     }
 
-    #presentation-normal {
-        font-weight: normal;
-        text-align: left;
-        font-size: 18px;
-    }
   ")),
   
   # Titre de l'application avec l'ID correct
-  titlePanel(tags$div("DigiSolidaire", id = "titre1")),
+  titlePanel(tags$div("Répartition des membres d'une association en France", id = "titre1")),
   
   # Séparation en onglets
   tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
@@ -121,7 +112,7 @@ ui <- fluidPage(
                        tags$div(
                          tags$h3("Présentation du projet : OPEN 2025", style = "color: mediumseagreen;"),
                          tags$p(
-                           "Notre projet vise créer une application fonctionnelle pour répertorier l'ensemble des membres d'une association.",
+                           "Notre projet vise à créer une application fonctionnelle pour répertorier l'ensemble des membres d'une association.",
                            style = "font-size: 18px; color: black; font-weight: 500; margin-top: 20px;"
                          )
                        ),
@@ -135,10 +126,25 @@ ui <- fluidPage(
                        titlePanel("Carte"),
                        numericInput("latitude", "Latitude :", value = 48.8566, min = -90, max = 90),
                        numericInput("longitude", "Longitude :", value = 2.3522, min = -180, max = 180),
+                       selectInput("selected_person", "Sélectionner une personne :", choices = df$Nom, selected = NULL),
+                      
                        actionButton("add_marker", "Ajouter un marqueur"),
                        actionButton("reset_map", "Réinitialiser la carte"),
                        tags$div("Carte interactive", id = "carte"),
                        leafletOutput("map", height = "600px")
+              ),
+              
+              tabPanel("Administrateur", 
+                       tags$div("Espace Administrateur", id = "administrateur"),
+                       tags$div("Interface réservée aux administrateurs", 
+                                style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
+                       ),
+                       textInput("admin_id", "Identifiant :", ""),
+                       passwordInput("admin_pass", "Mot de passe :"),
+                       actionButton("admin_login", "Se connecter", 
+                                    style = "margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"
+                       ),
+                       textOutput("login_message")  # pour afficher le message
               ),
               
               tabPanel("Contact", 
