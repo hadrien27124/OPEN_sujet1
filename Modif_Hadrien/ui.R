@@ -147,11 +147,10 @@ ui <- fluidPage(
                        textOutput("login_message")  # pour afficher le message
               ),
               
-              conditionalPanel(
-                condition = "output.is_authenticated == true",
+              
               tabPanel("Privé",  # Onglet privé
-                       textOutput("private_panel"))  # Contenu dynamique (UI réactif) pour l'interface privée
-    ),
+                       uiOutput("private_panel")  # Contenu dynamique (UI réactif) pour l'interface privée
+              ),
               
               
               
