@@ -5,51 +5,75 @@ library(tidygeocoder)
 library(dplyr)
 library(writexl)
 
+
+# Charger le fichier Excel
+df <- read_excel("Base_de_données.xlsx")
+
+# Vérifier si les colonnes lat et long existent déjà
+if (!("lat" %in% colnames(df) && "long" %in% colnames(df))) {
+  # Géocodage uniquement si les colonnes n'existent pas
+  df <- df %>%
+    geocode(address = Adresse, method = "osm")
+  
+  # Sauvegarder le dataframe mis à jour avec lat et long dans le fichier Excel
+  write_xlsx(df, "Base_de_données.xlsx")
+}
+
+# Vérifier les noms des colonnes pour s'assurer que lat et long ont été ajoutées
+# print(colnames(df))
+
+
 server <- function(input, output, session) {
-  # Charger les données
-  df <- read_excel("Base_de_données.xlsx", sheet = 1) %>% as.data.frame()
+  # Création d'un objet réactif pour stocker les marqueurs
+  markers <- reactiveVal(data.frame(lng = numeric(), lat = numeric()))
   
-  # Vérifier et ajouter lat/long si elles n'existent pas
-  if (!("lat" %in% colnames(df) && "long" %in% colnames(df))) {
-    df <- df %>% geocode(address = Adresse, method = "osm")
-    writexl::write_xlsx(df, "Base_de_données.xlsx")  # Sauvegarde avec coordonnées
-  }
-  
-  # Mettre à jour la liste déroulante avec les noms des personnes
-  observe({
-    updateSelectInput(session, "nom_selectionne", 
-                      choices = unique(paste(df$Prénom, df$Nom, sep = " ")))
+  # Ajouter un marqueur
+  observeEvent(input$add_marker, {
+    new_marker <- data.frame(lng = input$longitude, lat = input$latitude)
+    markers(rbind(markers(), new_marker))  # Ajout du nouveau marqueur
   })
   
-  # Réinitialiser la carte en supprimant tous les marqueurs
+  # Réinitialiser la carte (supprimer tous les marqueurs)
   observeEvent(input$reset_map, {
-    leafletProxy("map") %>% clearMarkers()
+    markers(data.frame(lng = numeric(), lat = numeric()))  # Réinitialisation des marqueurs
   })
   
-  # Observer la sélection et mettre à jour la carte
-  observeEvent(input$nom_selectionne, {
-    selected_person <- df %>%
-      filter(paste(Prénom, Nom, sep = " ") == input$nom_selectionne)
+  #Affichage de la carte
+  output$map <- renderLeaflet({
+    leaflet(df) %>%
+      addTiles() %>%  # Fond de carte
+      addMarkers(
+        lng = ~long,  # Coordonnée longitude
+        lat = ~lat,   # Coordonnée latitude
+        popup = ~paste0(
+          "<b>📌 Nom :</b> ", df$Nom, "<br>",
+          "<b>🙍 Prénom :</b> ", df$Prénom, "<br>",
+          "<b>📍 Adresse :</b> ", df$Adresse ))
+  })
+  observeEvent(input$selected_person, {
+    selected_data <- df[df$Nom == input$selected_person, ]
     
-    if (nrow(selected_person) > 0) {
+    if (nrow(selected_data) > 0) {
       leafletProxy("map") %>%
         clearMarkers() %>%
         addMarkers(
-          lng = selected_person$long, lat = selected_person$lat, 
-          popup = paste0("<b>📌 Nom :</b> ", selected_person$Nom, "<br>",
-                         "<b>🙍 Prénom :</b> ", selected_person$Prénom, "<br>",
-                         "<b>📍 Adresse :</b> ", selected_person$Adresse)
+          lng = selected_data$long,
+          lat = selected_data$lat,
+          popup = paste0(
+            "<b>📌 Nom :</b> ", selected_data$Nom, "<br>",
+            "<b>🙍 Prénom :</b> ", selected_data$Prénom, "<br>",
+            "<b>📍 Adresse :</b> ", selected_data$Adresse
+          )
         )
     }
   })
   
-  # Affichage initial de la carte avec tous les marqueurs
-  output$map <- renderLeaflet({
-    leaflet(df) %>%
-      addTiles() %>%
-      addMarkers(lng = ~long, lat = ~lat, 
-                 popup = ~paste0("<b>📌 Nom :</b> ", Nom, "<br>",
-                                 "<b>🙍 Prénom :</b> ", Prénom, "<br>",
-                                 "<b>📍 Adresse :</b> ", Adresse))
+  
+  # Mise à jour des marqueurs
+  observe({
+    leafletProxy("map") %>%
+      clearMarkers() %>%
+      addMarkers(data = markers(), ~lng, ~lat, popup = "Nouveau point")
   })
 }
+
