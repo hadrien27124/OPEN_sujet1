@@ -110,7 +110,7 @@ ui <- fluidPage(
                        tags$div(
                          tags$h3("Présentation du projet : OPEN 2025", style = "color: mediumseagreen;"),
                          tags$p(
-                           "Notre projet vise créer une application fonctionnelle pour répertorier l'ensemble des membres d'une association.",
+                           "Notre projet vise à créer une application fonctionnelle pour répertorier l'ensemble des membres d'une association.",
                            style = "font-size: 18px; color: black; font-weight: 500; margin-top: 20px;"
                          )
                        ),
