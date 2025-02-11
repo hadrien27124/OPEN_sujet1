@@ -66,7 +66,14 @@ server <- function(input, output, session) {
     
     if (nrow(user) == 1) {
       output$login_message <- renderText("Connexion réussie. Bienvenue!")
-      # Ici, vous pouvez ajouter le code pour afficher le contenu réservé aux administrateurs
+      
+      # Geler les valeurs réactives avant de les mettre à jour
+      freezeReactiveValue(input, "admin_id")
+      freezeReactiveValue(input, "admin_pass")
+      
+      # Réinitialiser les champs d'identifiant et de mot de passe
+      updateTextInput(session, "admin_id", value = "")
+      updatePasswordInput(session, "admin_pass", value = "")
     } else {
       output$login_message <- renderText("Identifiant ou mot de passe incorrect.")
     }
@@ -198,5 +205,3 @@ server <- function(input, output, session) {
     }
   })
 }
-
-
