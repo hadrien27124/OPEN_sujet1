@@ -50,6 +50,28 @@ save_data <- function(data) {
 }
 
 server <- function(input, output, session) {
+  # Liste des identifiants et mots de passe autorisés
+  credentials <- data.frame(
+    id = c("admin1", "admin2"),
+    pass = c("password1", "password2"),
+    stringsAsFactors = FALSE
+  )
+  
+  # Observer l'événement de clic sur le bouton de connexion
+  observeEvent(input$admin_login, {
+    req(input$admin_id, input$admin_pass)  # S'assurer que les champs ne sont pas vides
+    
+    # Vérifier si les informations d'identification sont correctes
+    user <- credentials[credentials$id == input$admin_id & credentials$pass == input$admin_pass, ]
+    
+    if (nrow(user) == 1) {
+      output$login_message <- renderText("Connexion réussie. Bienvenue!")
+      # Ici, vous pouvez ajouter le code pour afficher le contenu réservé aux administrateurs
+    } else {
+      output$login_message <- renderText("Identifiant ou mot de passe incorrect.")
+    }
+  })
+  
   # Création d'un objet réactif pour stocker les marqueurs
   markers <- reactiveVal(data.frame(lng = numeric(), lat = numeric()))
   
