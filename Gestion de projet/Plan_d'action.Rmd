@@ -1,0 +1,20 @@
+---
+title: "Plan_d'action_11/02"
+date: "2025-02-11"
+output: html_document
+---
+
+# Plan d'action de la journée du 11/02
+
+- Mettre les prénoms dans l'onglet contact
+
+- Faire fonctionner l'onglet contact
+
+- Une liste deroulante qui va directement chercher les personnes dans le tableau excel 
+
+- Faire un nouvel onglet pour completer/modifier la carte (onglet "administration") comme un identifiant avec mot de passe 
+
+
+- Dans l'onglet presentation rajouter des choses - présentation du projet / presentaion de l'entreprise
+
+- Trouver un nom pour l'entreprise
