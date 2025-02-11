@@ -4,7 +4,7 @@ library(leaflet)
 library(tidygeocoder)
 library(dplyr)
 library(writexl)
-
+library(readr)
 
 # Charger le fichier Excel
 df <- read_excel("Base_de_données.xlsx")
@@ -56,6 +56,44 @@ server <- function(input, output, session) {
     leafletProxy("map") %>%
       clearMarkers() %>%
       addMarkers(data = markers(), ~lng, ~lat, popup = "Nouveau point")
-  })
-}
-
+    
+    observeEvent(input$send, {
+      if (input$name == "Nom" || input$email == "email" || input$message == "message") {
+        output$confirm <- renderText("⚠️ Veuillez remplir tous les champs.")
+      } else {
+        
+        # Créer un dataframe avec le message
+        new_message <- data.frame(
+          Nom = input$name,
+          Email = input$email,
+          Message = input$message,
+          Date = Sys.time(),
+          stringsAsFactors = FALSE
+        )
+        
+        # Vérifier si le fichier existe déjà
+        file_name <- "messages.csv"
+        
+        if (file.exists(file_name)) {
+          old_messages <- read_csv(file_name, show_col_types = FALSE)
+          all_messages <- bind_rows(old_messages, new_message)
+        } else {
+          all_messages <- new_message
+        }
+        
+        # Sauvegarder correctement le fichier CSV (éviter d'avoir tout dans une seule colonne)
+        write.csv(all_messages, file_name, row.names = FALSE, fileEncoding = "UTF-8")
+        
+        output$confirm <- renderText("✅ Message envoyé avec succès !")
+        
+        # 🔹 Optionnel : Envoi par email (décommente si nécessaire)
+        # send.mail(from = "ton_email@gmail.com",
+        #           to = "destinataire@gmail.com",
+        #           subject = paste("Nouveau message de", input$name),
+        #           body = paste("Email :", input$email, "\n\nMessage :", input$message),
+        #           smtp = list(host.name = "smtp.gmail.com", port = 465, user.name = "ton_email@gmail.com", passwd = "ton_mot_de_passe", ssl = TRUE),
+        #           authenticate = TRUE,
+        #           send = TRUE)
+      }
+    })
+  })}
