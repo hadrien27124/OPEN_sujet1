@@ -6,28 +6,32 @@ library(dplyr)
 library(writexl)
 
 # Charger le fichier Excel
-
 df <- read_excel("Base_de_données.xlsx")
 
-# Vérifier si la colonne 'Adresse' existe
-if (!"Adresse" %in% colnames(df)) {
-  stop("La colonne 'Adresse' n'existe pas dans le fichier Excel.")
-}
+# Filtrer uniquement les adresses où lat et long sont vides (NA)
+adresses_a_geocoder <- df %>%
+  filter(is.na(lat) & is.na(long) & !is.na(Adresse)) %>%
+  select(Adresse)
 
-# Si les colonnes 'lat' et 'long' n'existent pas, les créer
-if (!"lat" %in% colnames(df)) {
-  df$lat <- NA
+# Vérifier qu'il y a des adresses à géocoder
+if (nrow(adresses_a_geocoder) > 0) {
+  
+  # Géocoder avec OpenStreetMap (OSM)
+  coordonnees <- geocode(adresses_a_geocoder, adresses_a_geocoder$Adresse,method = "osm")
+  
+  # Ajouter les résultats au dataframe temporaire
+  adresses_a_geocoder$lat <- coordonnees$lat
+  adresses_a_geocoder$long <- coordonnees$long
+  
+  # Mettre à jour uniquement les lignes où lat et long étaient NA
+  df <- df %>%
+    left_join(adresses_a_geocoder %>% select(Adresse, lat, long), by = "Adresse") %>%
+    mutate(
+      lat = coalesce(lat.x, lat.y),
+      long = coalesce(long.x, long.y)
+    ) %>%
+    select(-lat.x, -lat.y, -long.x, -long.y)  # Supprimer les colonnes temporaires créées par `left_join`
 }
-if (!"long" %in% colnames(df)) {
-  df$long <- NA
-}
-
-# Vérifier les lignes où 'lat' et 'long' sont NA (c'est-à-dire où ces colonnes sont vides)
-df <- df %>%
-  mutate(
-    lat = ifelse(is.na(lat) & is.na(long), geocode(address = Adresse, method = "osm")$lat, lat),
-    long = ifelse(is.na(lat) & is.na(long), geocode(address = Adresse, method = "osm")$long, long)
-  )
 
 # Sauvegarder le dataframe mis à jour avec lat et long dans le même fichier Excel
 write_xlsx(df, "Base_de_données.xlsx")
@@ -47,4 +51,3 @@ server <- function(input, output, session) {
       )
   })
 }
-
