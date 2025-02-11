@@ -57,5 +57,21 @@ server <- function(input, output, session) {
       clearMarkers() %>%
       addMarkers(data = markers(), ~lng, ~lat, popup = "Nouveau point")
   })
+  
+  # Rediriger vers l'onglet "Contact" lorsque le bouton "Commencer" est cliqué
+  observeEvent(input$start, {
+    updateTabsetPanel(session, "monOnglet", selected = "Contact")
+  })
+  
+  # Téléchargement du fichier PDF
+  output$pdfDownload <- downloadHandler(
+    filename = function() { 
+      paste("Gestion_de_projet.pdf") 
+    },
+    content = function(file) {
+      # Placez votre chemin de fichier PDF ici
+      file.copy("Gestion_de_projet.pdf", file)
+    }
+  )
 }
 
