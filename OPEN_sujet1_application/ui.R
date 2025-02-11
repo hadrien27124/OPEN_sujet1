@@ -79,7 +79,7 @@ ui <- fluidPage(
   ")),
   
   # Titre de l'application avec l'ID correct
-  titlePanel(tags$div("Répartition des membres d'une association en France", id = "titre1")),
+  titlePanel(tags$div("DigiSolidaire 🚀💡", id = "titre1")),
   
   # Séparation en onglets
   tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
@@ -104,8 +104,8 @@ ui <- fluidPage(
                          style = "margin-bottom: 10px;"
                        ),
                        
-                       # Bouton Commencer avant la présentation du projet
-                       actionButton("start", "Commencer", 
+                       # Bouton Contacter nous avant la présentation du projet
+                       actionButton("start", "Contacter nous", 
                                     style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"),
                        
                        # Nouveau bloc pour la présentation du projet
@@ -114,11 +114,24 @@ ui <- fluidPage(
                          tags$p(
                            "Notre projet vise à créer une application fonctionnelle pour répertorier l'ensemble des membres d'une association.",
                            style = "font-size: 18px; color: black; font-weight: 500; margin-top: 20px;"
+                         ),
+                         # Section "Présentation des onglets"
+                         tags$div(
+                           tags$p("Vous pouvez retrouver sur cette application différents onglets :"),
+                           tags$ul(
+                             tags$li("Onglet Présentation : Présente l'association, le projet et donne accès à diverses informations supplémentaires avec le bouton En savoir plus"),
+                             tags$li("Onglet Carte : Représente sur une carte l'ensemble des membres de l'association renseignés dans une base de données. Une sélection via une liste à puce est possible."),
+                             tags$li("Onglet Administrateur : Uniquement réservé aux membres adminsitrateurs ayant un identifiant et un mot de passe. Cet onglet sert aux adminsitrateurs à renseigner des nouveaux membres dans la base de données."),
+                             tags$li("Onglet Contact : Permet aux visiteurs de l'application d'envoyer un formulaire pour poser des questions. Les liens vers différents sites et réseaux sociaux sont également disponibles en bas de page")
+                           ),
+                           id = "presentation-normal",
+                           style = "margin-bottom: 10px;"
                          )
+                         
                        ),
                        
                        # Nouveau bouton "En savoir plus" pour télécharger un PDF
-                       downloadButton("pdfDownload", "En savoir plus", 
+                       downloadButton("pdfDownload", "En savoir plus",
                                       style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
               ),
               
