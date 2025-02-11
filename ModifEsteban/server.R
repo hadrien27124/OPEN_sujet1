@@ -5,57 +5,91 @@ library(tidygeocoder)
 library(dplyr)
 library(writexl)
 
+# Chemin du fichier Excel
+file_path <- "Base_de_données.xlsx"
 
-# Charger le fichier Excel
-df <- read_excel("Base_de_données.xlsx")
+# Charger la base de données
+df <- read_excel(file_path)
 
-# Vérifier si les colonnes lat et long existent déjà
+# Vérifier si les colonnes lat et long existent déjà, sinon les créer
 if (!("lat" %in% colnames(df) && "long" %in% colnames(df))) {
-  # Géocodage uniquement si les colonnes n'existent pas
   df <- df %>%
     geocode(address = Adresse, method = "osm")
   
-  # Sauvegarder le dataframe mis à jour avec lat et long dans le fichier Excel
-  write_xlsx(df, "Base_de_données.xlsx")
+  # Sauvegarder les données mises à jour
+  write_xlsx(df, file_path)
 }
 
-# Vérifier les noms des colonnes pour s'assurer que lat et long ont été ajoutées
-# print(colnames(df))
-
-
 server <- function(input, output, session) {
-  # Création d'un objet réactif pour stocker les marqueurs
+  # Stocker les données en mode réactif
+  data <- reactiveVal(df)
+  
+  # Ajouter un membre et mettre à jour la base de données
+  observeEvent(input$add_member, {
+    if (input$nom != "" && input$prenom != "" && input$adresse != "") {
+      new_entry <- data.frame(
+        Nom = input$nom,
+        Prénom = input$prenom,
+        Adresse = input$adresse
+      )
+      
+      # Géocodage de l'adresse
+      new_entry <- new_entry %>%
+        geocode(address = Adresse, method = "osm")
+      
+      # Vérifier si le géocodage a réussi
+      if (!is.na(new_entry$lat) && !is.na(new_entry$long)) {
+        updated_data <- rbind(data(), new_entry)
+        data(updated_data)
+        
+        # Sauvegarder les nouvelles données dans l'Excel
+        write_xlsx(updated_data, file_path)
+        
+        showNotification("✅ Membre ajouté avec succès !", type = "message")
+      } else {
+        showNotification("⚠️ Adresse introuvable.", type = "error")
+      }
+    } else {
+      showNotification("⚠️ Tous les champs doivent être remplis.", type = "error")
+    }
+  })
+  
+  # Gérer l'ajout manuel de marqueurs
   markers <- reactiveVal(data.frame(lng = numeric(), lat = numeric()))
   
-  # Ajouter un marqueur
   observeEvent(input$add_marker, {
     new_marker <- data.frame(lng = input$longitude, lat = input$latitude)
-    markers(rbind(markers(), new_marker))  # Ajout du nouveau marqueur
+    markers(rbind(markers(), new_marker))
   })
   
-  # Réinitialiser la carte (supprimer tous les marqueurs)
   observeEvent(input$reset_map, {
-    markers(data.frame(lng = numeric(), lat = numeric()))  # Réinitialisation des marqueurs
+    markers(data.frame(lng = numeric(), lat = numeric()))
   })
   
-  #Affichage de la carte
+  # Affichage de la carte
   output$map <- renderLeaflet({
-    leaflet(df) %>%
-      addTiles() %>%  # Fond de carte
+    leaflet(data()) %>%
+      addTiles() %>%
       addMarkers(
-        lng = ~long,  # Coordonnée longitude
-        lat = ~lat,   # Coordonnée latitude
+        lng = ~long, 
+        lat = ~lat, 
         popup = ~paste0(
-          "<b>📌 Nom :</b> ", df$Nom, "<br>",
-          "<b>🙍 Prénom :</b> ", df$Prénom, "<br>",
-          "<b>📍 Adresse :</b> ", df$Adresse ))
+          "<b>📌 Nom :</b> ", Nom, "<br>",
+          "<b>🙍 Prénom :</b> ", Prénom, "<br>",
+          "<b>📍 Adresse :</b> ", Adresse
+        )
+      )
   })
   
-  # Mise à jour des marqueurs
+  # Mise à jour dynamique de la carte
   observe({
     leafletProxy("map") %>%
       clearMarkers() %>%
-      addMarkers(data = markers(), ~lng, ~lat, popup = "Nouveau point")
+      addMarkers(data = data(), lng = ~long, lat = ~lat, popup = ~paste0(
+        "<b>📌 Nom :</b> ", Nom, "<br>",
+        "<b>🙍 Prénom :</b> ", Prénom, "<br>",
+        "<b>📍 Adresse :</b> ", Adresse
+      )) %>%
+      addMarkers(data = markers(), lng = ~lng, lat = ~lat, popup = "Marqueur manuel")
   })
 }
-
