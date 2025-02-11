@@ -50,12 +50,19 @@ save_data <- function(data) {
 }
 
 server <- function(input, output, session) {
+  
+  
+  
+  
   # Liste des identifiants et mots de passe autorisés
   credentials <- data.frame(
     id = c("admin1", "admin2"),
     pass = c("password1", "password2"),
     stringsAsFactors = FALSE
   )
+  
+  # Variable réactive pour suivre l'état de la connexion
+  user_authenticated <- reactiveVal(FALSE)  # Par défaut, non authentifié
   
   # Observer l'événement de clic sur le bouton de connexion
   observeEvent(input$admin_login, {
@@ -65,12 +72,40 @@ server <- function(input, output, session) {
     user <- credentials[credentials$id == input$admin_id & credentials$pass == input$admin_pass, ]
     
     if (nrow(user) == 1) {
+      user_authenticated(TRUE)
       output$login_message <- renderText("Connexion réussie. Bienvenue!")
-      # Ici, vous pouvez ajouter le code pour afficher le contenu réservé aux administrateurs
+      
+      updateTextInput(session, "admin_id", value = "")
+      updateTextInput(session, "admin_pass", value = "")
+      
+      updateTabsetPanel(session, "monOnglet", selected = "Privé")
+      
     } else {
       output$login_message <- renderText("Identifiant ou mot de passe incorrect.")
     }
   })
+  
+  
+  
+  # Rendre l'interface privée visible une fois l'utilisateur authentifié
+  output$private_panel <- renderUI({
+    if (user_authenticated()) {
+      fluidPage(
+        tags$h3("Bienvenue dans l'espace Privé"),
+        tags$p("C'est l'espace réservé aux administrateurs."),
+        # Ajoutez ici le contenu privé que vous voulez afficher
+        tags$p("Vous pouvez gérer les utilisateurs, consulter des rapports, etc.")
+      )
+    } else {
+      fluidPage(
+        tags$h3("Espace Privé"),
+        tags$p("Veuillez vous connecter pour accéder à cet espace.")
+      )
+    }
+  })
+  
+  
+  
   
   # Création d'un objet réactif pour stocker les marqueurs
   markers <- reactiveVal(data.frame(lng = numeric(), lat = numeric()))
@@ -144,6 +179,10 @@ server <- function(input, output, session) {
   # Charger les données existantes depuis le fichier Excel
   df_messages <- load_data()
   
+  is_valid_email <- function(email) {
+    grepl("^[[:alnum:]._%+-]+@[[:alnum:]-]+\\.[[:alpha:]]{2,}$", email)
+  }
+  
   observeEvent(input$send, {
     if (input$name == "" || input$email == "" || input$message == "") {
       showModal(modalDialog(
@@ -152,6 +191,14 @@ server <- function(input, output, session) {
         easyClose = TRUE,
         footer = modalButton("OK")
       ))
+    } else if (!is_valid_email(input$email)) {  # Vérifie l'e-mail
+      showModal(modalDialog(
+        title = "Adresse e-mail invalide ❌",
+        "Veuillez entrer une adresse e-mail valide (ex: exemple@isara.com).",
+        easyClose = TRUE,
+        footer = modalButton("OK")
+      ))
+      
     } else {
       # Créer un dataframe avec des colonnes distinctes
       new_message <- data.frame(
@@ -198,4 +245,5 @@ server <- function(input, output, session) {
     }
   })
 }
+
 
