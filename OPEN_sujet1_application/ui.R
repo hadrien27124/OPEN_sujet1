@@ -160,6 +160,10 @@ ui <- fluidPage(
                        textOutput("login_message")  # pour afficher le message
               ),
               
+              tabPanel("Privé",  # Onglet privé
+                       uiOutput("private_panel")  # Contenu dynamique (UI réactif) pour l'interface privée
+              ),
+              
               tabPanel("Contact", 
                        tags$div("Informations de contact", id = "contact"),
                        fluidRow(

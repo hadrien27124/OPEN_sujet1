@@ -57,6 +57,9 @@ server <- function(input, output, session) {
     stringsAsFactors = FALSE
   )
   
+  # Variable réactive pour suivre l'état de la connexion
+  user_authenticated <- reactiveVal(FALSE)  # Par défaut, non authentifié
+  
   # Observer l'événement de clic sur le bouton de connexion
   observeEvent(input$admin_login, {
     req(input$admin_id, input$admin_pass)  # S'assurer que les champs ne sont pas vides
@@ -65,11 +68,35 @@ server <- function(input, output, session) {
     user <- credentials[credentials$id == input$admin_id & credentials$pass == input$admin_pass, ]
     
     if (nrow(user) == 1) {
+      user_authenticated(TRUE)
       output$login_message <- renderText("Connexion réussie. Bienvenue!")
+      
       updateTextInput(session, "admin_id", value = "")
       updateTextInput(session, "admin_pass", value = "")
+      
+      updateTabsetPanel(session, "monOnglet", selected = "Privé")
+      
     } else {
       output$login_message <- renderText("Identifiant ou mot de passe incorrect.")
+    }
+  })
+  
+  
+  
+  # Rendre l'interface privée visible une fois l'utilisateur authentifié
+  output$private_panel <- renderUI({
+    if (user_authenticated()) {
+      fluidPage(
+        tags$h3("Bienvenue dans l'espace Privé"),
+        tags$p("C'est l'espace réservé aux administrateurs."),
+        # Ajoutez ici le contenu privé que vous voulez afficher
+        tags$p("Vous pouvez gérer les utilisateurs, consulter des rapports, etc.")
+      )
+    } else {
+      fluidPage(
+        tags$h3("Espace Privé"),
+        tags$p("Veuillez vous connecter pour accéder à cet espace.")
+      )
     }
   })
   
