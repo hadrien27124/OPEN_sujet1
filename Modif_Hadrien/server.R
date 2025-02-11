@@ -50,10 +50,6 @@ save_data <- function(data) {
 }
 
 server <- function(input, output, session) {
-  
-  
-  
-  
   # Liste des identifiants et mots de passe autorisés
   credentials <- data.frame(
     id = c("admin1", "admin2"),
@@ -103,9 +99,6 @@ server <- function(input, output, session) {
       )
     }
   })
-  
-  
-  
   
   # Création d'un objet réactif pour stocker les marqueurs
   markers <- reactiveVal(data.frame(lng = numeric(), lat = numeric()))
@@ -245,3 +238,5 @@ server <- function(input, output, session) {
     }
   })
 }
+
+
