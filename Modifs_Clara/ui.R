@@ -3,14 +3,14 @@ library(readxl)
 library(leaflet)
 library(tidygeocoder)
 library(dplyr)
-
+  
 ui <- fluidPage(
   
   # Modification de la police et du style des onglets
   tags$style(HTML("
     /* Modifier la barre d'onglets */
     .nav-tabs > li > a {
-        font-family: 'Roboto';
+        font-family: 'Roboto', sans-serif;
         font-size: 18px;
         font-weight: bold;
         color: white;
@@ -45,6 +45,7 @@ ui <- fluidPage(
     /* Arrière-plan de l'application */
     body {
         background-color: #f5f5f5; /* Gris clair */
+        font-family: 'Roboto', sans-serif; /* Police uniforme */
     }
     
     /* Contenu des onglets avec bordure et ombre */
@@ -57,7 +58,7 @@ ui <- fluidPage(
     }
     
     #titre1 {
-        font-family: 'Roboto';
+        font-family: 'Roboto', sans-serif; /* Police uniforme */
         font-size: 40px;
         color: mediumseagreen; /* Couleur pour le titre */
         font-weight: bold;
@@ -66,74 +67,101 @@ ui <- fluidPage(
         border-bottom: 3px solid mediumseagreen;
     }
 
-    #presentation, #carte, #contact {
-        font-family: 'Roboto';
-        font-size: 25px;
-        color: black;
-        font-weight: 600;
+    #bienvenue {
+        font-weight: bold;
         text-align: center;
+        font-size: 30px;
+    }
+    
+    #presentation-italic {
+        font-style: italic;
+        text-align: center;
+        font-size: 18px;
+        font-weight: normal;
     }
 
+    #presentation-normal {
+        font-weight: normal;
+        text-align: left;
+        font-size: 18px;
+    }
   ")),
   
   # Titre de l'application avec l'ID correct
-  titlePanel(tags$div("Répartition des membres d'une association en France", id = "titre1")),
+  titlePanel(tags$div("DigiSolidaire", id = "titre1")),
   
   # Séparation en onglets
-  tabsetPanel(
-    
-    tabPanel("Présentation", 
-             tags$div("Bienvenue dans l'application", id = "presentation"),
-             actionButton("start", "Commencer", 
-                          style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
-    ),
-    
-    tabPanel("Carte", 
-             titlePanel("Carte"),
-             # Champs pour entrer les coordonnées
-             numericInput("latitude", "Latitude :", value = 48.8566, min = -90, max = 90),
-             numericInput("longitude", "Longitude :", value = 2.3522, min = -180, max = 180),
-             
-             # Boutons pour ajouter et réinitialiser les marqueurs
-             actionButton("add_marker", "Ajouter un marqueur"),
-             actionButton("reset_map", "Réinitialiser la carte"),
-             tags$div("Carte interactive", id = "carte"),
-             leafletOutput("map", height = "600px")
-    ),
-    
-    tabPanel("Contact", 
-             tags$div("Informations de contact", id = "contact"),
-             
-             # Création d'un formulaire
-             fluidRow(
-               column(6, offset = 3,
-                      textInput("name", "Nom :", ""),
-                      textInput("email", "Email :", ""),
-                      textAreaInput("message", "Message :", "", rows = 4),
-                      actionButton("send", "Envoyer", 
-                                   style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
-               )
-             ),
-             
-             
-             tags$div(
-               "Suivez-nous sur nos réseaux sociaux:", 
-               style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
-             ),
-             
-             tags$div(
-               style = "text-align: center; margin-top: 10px;",
-               
-               tags$a(
-                 href = "https://isara.fr/",
-                 tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")
-               ),
-               tags$a(
-                 href = "https://www.instagram.com/isara_lyonavignon/?hl=fr",
-                 tags$img(src = "instagram.png", style = "width: 50px; height:50px;")
-               ),
-               tags$a(
-                 href = "https://fr.linkedin.com/school/isara-lyonavignon/",
-                 tags$img(src = "linkedin.png", style = "width: 70px; height:70px;")
-               )
-             ))))
+  tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
+              tabPanel("Présentation", 
+                       
+                       # Section "Bienvenue chez DigiSolidaire"
+                       tags$div(
+                         tags$span("Bienvenue chez DigiSolidaire 🚀💡", id = "bienvenue"), 
+                         tags$br(),  # Saut de ligne
+                       ),
+                       
+                       # Section "Une association dédiée à l’inclusion numérique..."
+                       tags$div(
+                         tags$i("Une association dédiée à l’inclusion numérique, l’éducation digitale et l’accès aux nouvelles technologies pour tous.", id = "presentation-italic"),
+                         tags$br(),  # Saut de ligne
+                       ),
+                       
+                       # Section "Notre association est engagée..."
+                       tags$div(
+                         "Notre association est engagée. Nous œuvrons pour rendre les nouvelles technologies accessibles à tous en proposant des formations, des ateliers et un accompagnement personnalisé. Rejoignez-nous pour réduire la fracture numérique et construire un avenir digital solidaire !",
+                         id = "presentation-normal",
+                         style = "margin-bottom: 10px;"
+                       ),
+                       
+                       # Bouton Commencer avant la présentation du projet
+                       actionButton("start", "Commencer", 
+                                    style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"),
+                       
+                       # Nouveau bloc pour la présentation du projet
+                       tags$div(
+                         tags$h3("Présentation du projet : OPEN 2025", style = "color: mediumseagreen;"),
+                         tags$p(
+                           "Notre projet vise créer une application fonctionnelle pour répertorier l'ensemble des membres d'une association.",
+                           style = "font-size: 18px; color: black; font-weight: 500; margin-top: 20px;"
+                         )
+                       ),
+                       
+                       # Nouveau bouton "En savoir plus" pour télécharger un PDF
+                       downloadButton("pdfDownload", "En savoir plus", 
+                                      style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+              ),
+              
+              tabPanel("Carte", 
+                       titlePanel("Carte"),
+                       numericInput("latitude", "Latitude :", value = 48.8566, min = -90, max = 90),
+                       numericInput("longitude", "Longitude :", value = 2.3522, min = -180, max = 180),
+                       actionButton("add_marker", "Ajouter un marqueur"),
+                       actionButton("reset_map", "Réinitialiser la carte"),
+                       tags$div("Carte interactive", id = "carte"),
+                       leafletOutput("map", height = "600px")
+              ),
+              
+              tabPanel("Contact", 
+                       tags$div("Informations de contact", id = "contact"),
+                       fluidRow(
+                         column(6, offset = 3,
+                                textInput("name", "Nom :", ""),
+                                textInput("email", "Email :", ""),
+                                textAreaInput("message", "Message :", "", rows = 4),
+                                actionButton("send", "Envoyer", 
+                                             style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+                         )
+                       ),
+                       tags$div(
+                         "Suivez-nous sur nos réseaux sociaux:", 
+                         style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
+                       ),
+                       tags$div(
+                         style = "text-align: center; margin-top: 10px;",
+                         tags$a(href = "https://isara.fr/", tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")),
+                         tags$a(href = "https://www.instagram.com/isara_lyonavignon/?hl=fr", tags$img(src = "instagram.png", style = "width: 50px; height:50px;")),
+                         tags$a(href = "https://fr.linkedin.com/school/isara-lyonavignon/", tags$img(src = "linkedin.png", style = "width: 70px; height:70px;"))
+                       )
+              )
+  )
+)
