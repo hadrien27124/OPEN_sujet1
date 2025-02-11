@@ -151,9 +151,13 @@ ui <- fluidPage(
                        tags$div("Informations de contact", id = "contact"),
                        fluidRow(
                          column(6, offset = 3,
-                                textInput("name", "Nom :", ""),
-                                textInput("email", "Email :", ""),
-                                textAreaInput("message", "Message :", "", rows = 4),
+                                textInput("name", "Nom : *", ""),
+                                textInput("email", "Email : *", ""),
+                                textAreaInput("message", "Message : *", "", rows = 4),
+                                tags$div(
+                                  tags$span("Les champs suivi d'un * sont obligatoires", 
+                                            style = "font-style : italic; font-size: 12px"), 
+                                ),
                                 actionButton("send", "Envoyer", 
                                              style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
                          )
