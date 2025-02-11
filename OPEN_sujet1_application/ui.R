@@ -137,11 +137,8 @@ ui <- fluidPage(
               
               tabPanel("Carte", 
                        titlePanel("Carte"),
-                       numericInput("latitude", "Latitude :", value = 48.8566, min = -90, max = 90),
-                       numericInput("longitude", "Longitude :", value = 2.3522, min = -180, max = 180),
                        selectInput("selected_person", "Sélectionner une personne :", choices = df$Nom, selected = NULL),
                       
-                       actionButton("add_marker", "Ajouter un marqueur"),
                        actionButton("reset_map", "Réinitialiser la carte"),
                        tags$div("Carte interactive", id = "carte"),
                        leafletOutput("map", height = "600px")
