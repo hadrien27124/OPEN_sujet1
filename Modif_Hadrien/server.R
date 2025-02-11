@@ -4,7 +4,7 @@ library(leaflet)
 library(tidygeocoder)
 library(dplyr)
 library(writexl)
-
+library(readr)
 
 # Charger le fichier Excel
 df <- read_excel("Base_de_données.xlsx")
@@ -56,6 +56,29 @@ server <- function(input, output, session) {
     leafletProxy("map") %>%
       clearMarkers() %>%
       addMarkers(data = markers(), ~lng, ~lat, popup = "Nouveau point")
-  })
-}
-
+    
+    observeEvent(input$send, {
+      if (input$name == "" || input$email == "" || input$message == "") {
+        output$confirm <- renderText("⚠️ Veuillez remplir tous les champs.")
+      } else {
+        
+        # Créer un dataframe avec le message
+        new_message <- data.frame(
+          Nom = input$name,
+          Email = input$email,
+          Message = input$message,
+          Date = Sys.time(),
+          stringsAsFactors = FALSE
+        )
+        
+        
+        file_name <- "messages.csv"
+        
+        # Sauvegarder correctement le fichier CSV (éviter d'avoir tout dans une seule colonne)
+        write.csv(all_messages, file_name, row.names = FALSE, fileEncoding = "UTF-8")
+        
+        output$confirm <- renderText("✅ Message envoyé avec succès !")
+        
+      }
+    })
+  })}

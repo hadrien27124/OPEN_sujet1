@@ -66,13 +66,13 @@ ui <- fluidPage(
         border-bottom: 3px solid mediumseagreen;
     }
 
-    #presentation, #carte, #contact {
-        font-family: 'Roboto';
-        font-size: 25px;
-        color: black;
-        font-weight: 600;
-        text-align: center;
-    }
+    #presentation, #carte, #contact, #administrateur {
+    font-family: 'Roboto';
+    font-size: 25px;
+    color: black;
+    font-weight: 600;
+    text-align: center;
+}
 
   ")),
   
@@ -99,6 +99,16 @@ ui <- fluidPage(
              actionButton("reset_map", "Réinitialiser la carte"),
              tags$div("Carte interactive", id = "carte"),
              leafletOutput("map", height = "600px")
+    ),
+    
+    tabPanel("Administrateur", 
+             tags$div("Espace Administrateur", id = "administrateur"),
+             tags$div("Interface réservée aux administrateurs", 
+                      style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"),
+             textInput("admin_id", "Identifiant :", ""),
+             passwordInput("admin_pass", "Mot de passe :"),
+             actionButton("admin_login", "Se connecter", 
+                          style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
     ),
     
     tabPanel("Contact", 
@@ -135,5 +145,5 @@ ui <- fluidPage(
                tags$a(
                  href = "https://fr.linkedin.com/school/isara-lyonavignon/",
                  tags$img(src = "linkedin.png", style = "width: 70px; height:70px;")
-               )
+               ),
              ))))
