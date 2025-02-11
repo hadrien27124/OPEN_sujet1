@@ -6,15 +6,16 @@ output: html_document
 
 # Plan d'action de la journée du 11/02
 
-- Mettre les prénoms dans l'onglet contact
+- Mettre les prénoms dans l'onglet contact (Hadrien)
 
-- Faire fonctionner l'onglet contact
+- Faire fonctionner l'onglet contact (Hadrien)
 
-- Une liste deroulante qui va directement chercher les personnes dans le tableau excel 
+- Une liste deroulante qui va directement chercher les personnes dans le tableau excel (Sofiane)
 
-- Faire un nouvel onglet pour completer/modifier la carte (onglet "administration") comme un identifiant avec mot de passe 
+- Faire un nouvel onglet pour completer/modifier la carte (onglet "administration") comme un identifiant avec mot de passe (Marie)
 
+- Aller chercher la base donnée - Quand on ajoute un nouveau membre (avec nom prenom adresse) il va falloir lier le tableau excel. Le fait de rajouter un nouveau membre sur l'appli, que ca se rajoute directement dans le tableau excel (Esteban)
 
-- Dans l'onglet presentation rajouter des choses - présentation du projet / presentaion de l'entreprise
+- Dans l'onglet presentation rajouter des choses - présentation du projet / presentation de l'entreprise (Clara)
 
-- Trouver un nom pour l'entreprise
+- Trouver un nom pour l'entreprise (Juliette)
