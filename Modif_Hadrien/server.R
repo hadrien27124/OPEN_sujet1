@@ -82,8 +82,10 @@ server <- function(input, output, session) {
   output$private_mdp <- renderUI({
     if (user_authenticated()) {
       fluidPage(
-        tags$h3(""),
+        tags$h3("Appyez ici pour vous deconnecter"),
         # Ajoutez ici le contenu privé que vous voulez afficher
+        actionButton("logout", "Déconnexion", 
+                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
       )
     } else {
       fluidPage(
@@ -97,6 +99,10 @@ server <- function(input, output, session) {
     }
   })
   
+  observeEvent(input$logout, {
+    user_authenticated(FALSE)  # Déconnecte l'utilisateur
+    output$login_message <- renderText("Vous avez été déconnecté.")  # Message de confirmation
+  })
   
   
   # Rendre l'interface privée visible une fois l'utilisateur authentifié
