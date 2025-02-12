@@ -145,7 +145,7 @@ ui <- fluidPage(
                        
                        # Section "Notre association est engagée..."
                        tags$div(
-                         "Notre association est engagée. Nous œuvrons pour rendre les nouvelles technologies accessibles à tous en proposant des formations, des ateliers et un accompagnement personnalisé. Rejoignez-nous pour réduire la fracture numérique et construire un avenir digital solidaire !",
+                         "Notre association est engagée, nous œuvrons pour rendre les nouvelles technologies accessibles à tous en proposant des formations, des ateliers et un accompagnement personnalisé. Rejoignez-nous pour réduire la fracture numérique et construire un avenir digital solidaire !",
                          id = "presentation-normal",
                          style = "margin-bottom: 10px;"
                        ),
@@ -158,17 +158,17 @@ ui <- fluidPage(
                        tags$div(
                          tags$h3("Présentation du projet : OPEN 2025", style = "color: mediumseagreen;"),
                          tags$p(
-                           "Notre projet vise à créer une application fonctionnelle pour répertorier l'ensemble des membres d'une association.",
+                           "Notre projet vise à créer une application stable et fonctionnelle pour répertorier l'ensemble des membres d'une association. D'autres éléments pourront être ajoutés sur l'interface.",
                            style = "font-size: 18px; color: black; font-weight: 500; margin-top: 20px;"
                          ),
                          # Section "Présentation des onglets"
                          tags$div(
                            tags$p("Vous pouvez retrouver sur cette application différents onglets :"),
                            tags$ul(
-                             tags$li("Onglet Présentation : Présente l'association, le projet et donne accès à diverses informations supplémentaires avec le bouton En savoir plus"),
-                             tags$li("Onglet Carte : Représente sur une carte l'ensemble des membres de l'association renseignés dans une base de données. Une sélection via une liste à puce est possible."),
-                             tags$li("Onglet Administrateur : Uniquement réservé aux membres adminsitrateurs ayant un identifiant et un mot de passe. Cet onglet sert aux adminsitrateurs à renseigner des nouveaux membres dans la base de données."),
-                             tags$li("Onglet Contact : Permet aux visiteurs de l'application d'envoyer un formulaire pour poser des questions. Les liens vers différents sites et réseaux sociaux sont également disponibles en bas de page")
+                             tags$li("Onglet Présentation : Présente l'association, le projet et donne accès à diverses informations supplémentaires avec le bouton En savoir plus. Le bouton nous contacter redirige vers l'ongelt Contact."),
+                             tags$li("Onglet Carte : Représente sur une carte l'ensemble des membres de l'association renseignés dans une base de données. Une sélection via une liste à puce est possible. Une réinitialisation de la sélection est possible via un bouton."),
+                             tags$li("Onglet Administrateur : Uniquement réservé aux membres adminsitrateurs ayant un identifiant et un mot de passe valides. Cet onglet sert aux adminsitrateurs à renseigner des nouveaux membres dans la base de données et de les afficher sur la carte intéractive."),
+                             tags$li("Onglet Contact : Permet aux visiteurs de l'application d'envoyer un formulaire pour poser des questions. Les liens vers différents sites et réseaux sociaux sont également disponibles en bas de page. Un bouton crédit présente les membres ayant créer l'interface ainsi que leur répartition des tâches.")
                            ),
                            id = "presentation-normal",
                            style = "margin-bottom: 10px;"

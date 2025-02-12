@@ -73,9 +73,16 @@ server <- function(input, output, session) {
       footer = NULL,  # Pas de pied de page
       tags$div(
         # Contenu des crédits : texte, liens, etc.
-        h4("Développé par les étudiant en 4ème année de l'ISARA Lyon", style = "color: mediumseagreen;"),
+        h4("Développé par des étudiants en 4ème année de l'ISARA-Lyon", style = "color: mediumseagreen;"),
         p("Ce projet a été réalisé dans le cadre d'un module de perfectionnement en informatique par : Hadrien Schmitt, Esteban Faravellon, Sofiane Bouhamou, Clara Couston, Juliette Goudaert et Marie Sanchez."),
-        p("AJOUTER CE QUE CHACUN A FAIT")
+        p("Les tâches ont été réparties de la manière suivante :"),
+        p("Hadrien : Implémentation de la carte intéractive, mise en place de l'onglet Contact avec son fonctionnement (formulaire et conditions de remplissage), mise en place des fonctionnalités de l'onglet Administrateurs avec la déconnection des membres via un bouton."),
+        p("Clara : Implémentation de la base de données (nom, prénom et adresse) avec géocodage en coordonnées pour affichage sur la carte, mise en place de l'onglet présentation avec texte et boutons."),
+        p("Esteban : Mise en place des boutons pop-up avec affichage des informations sur les personnes, mise en place de la fonctionnalité de la carte avec l'ajout des personnes dans l'onglet administrateur."),
+        p("Marie : Mise en place des différents onglets de l'interface avec les styles. Mise en place de l'onglet Administrateur avec le blocage d'accès avec identifiant et mot de passe."),
+        p("Sofiane : Mise en place de l'onglet Carte avec la liste déroulante et la réinitialisation des données sur la carte."),
+        p("Juliette : Ajustements de l'application avec l'esthétisme de l'interface, la fonctionnalité du bouton en savoir plus, les crédits dans l'onglet Contact."),
+        p("L'ensemble des membres ont contribué à la mise à jour et aux avancées de l'interface via l'outils GitHub."),
       )
     )
     )
@@ -149,7 +156,7 @@ server <- function(input, output, session) {
   output$private_mdp <- renderUI({
     if (user_authenticated()) {
       fluidPage(
-        tags$h3("Appyez ici pour vous deconnecter"),
+        tags$h3("Appuyez ici pour vous déconnecter"),
         # Ajoutez ici le contenu privé que vous voulez afficher
         actionButton("logout", "Déconnexion", 
                      style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"),
@@ -188,7 +195,7 @@ server <- function(input, output, session) {
       fluidPage(
         tags$h3("Bienvenue dans l'espace Privé"),
         # Ajoutez ici le contenu privé que vous voulez afficher
-        tags$p("Vous pouvez gérer les utilisateurs, consulter des rapports, etc.")
+        tags$p("Vous pouvez gérer les utilisateurs en ajoutant des membres et les afficher sur la carte.")
       )
     } else {
       fluidPage(
@@ -365,5 +372,3 @@ server <- function(input, output, session) {
     }
   })
 }
-
-
