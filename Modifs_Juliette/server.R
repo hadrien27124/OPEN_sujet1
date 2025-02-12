@@ -52,10 +52,18 @@ save_data <- function(data) {
 server <- function(input, output, session) {
   #Observer l'évènement de clic sur le bouton "En savoir plus" et ouvrir le pdf gestion de projet dans l'app
   observeEvent(input$showPDF, {
-    output$ContenuPDF <- renderUI({
-      tags$embed(src = "Gestion_de_projet.pdf", type = "application/pdf", width = "100%", height = "600px")
-    })
+    showModal(modalDialog(
+      title = "PDF - En savoir plus",
+      size = "l",  # Grande taille pour la modale
+      easyClose = TRUE,  # Permet de fermer facilement la modale
+      footer = NULL,  # Pas de pied de page
+      tags$div(
+        # Utilisation d'un iframe pour afficher le PDF
+        tags$iframe(src = "Gestion_de_projet.pdf", width = "100%", height = "500px")
+      )
+    ))
   })
+
   
   observeEvent(input$credits, {
     showModal(modalDialog(
