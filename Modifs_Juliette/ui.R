@@ -130,15 +130,16 @@ ui <- fluidPage(
                          
                        ),
                        
-                       # Nouveau bouton "En savoir plus" pour télécharger un PDF
-                       downloadButton("pdfDownload", "En savoir plus",
-                                      style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+                       # Nouveau bouton "En savoir plus" pour afficher un PDF
+                       actionButton("showPDF", "En savoir plus",
+                                    style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"), 
+                       uiOutput("ContenuPDF")
               ),
               
               tabPanel("Carte", 
                        titlePanel("Carte"),
                        selectInput("selected_person", "Sélectionner une personne :", choices = df$Nom, selected = NULL),
-                       
+                      
                        actionButton("reset_map", "Réinitialiser la carte"),
                        tags$div("Carte interactive", id = "carte"),
                        leafletOutput("map", height = "600px")
@@ -150,7 +151,8 @@ ui <- fluidPage(
                        uiOutput("private_mdp")
               ),
               
-            
+
+              
               tabPanel("Contact", 
                        tags$div("Informations de contact", id = "contact"),
                        fluidRow(
@@ -167,7 +169,7 @@ ui <- fluidPage(
                          )
                        ),
                        tags$div(
-                         "Suivez-nous sur nos réseaux sociaux:", 
+                         "Suivez-nous sur nos réseaux sociaux :", 
                          style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
                        ),
                        tags$div(
@@ -175,7 +177,10 @@ ui <- fluidPage(
                          tags$a(href = "https://isara.fr/", tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")),
                          tags$a(href = "https://www.instagram.com/isara_lyonavignon/?hl=fr", tags$img(src = "instagram.png", style = "width: 50px; height:50px;")),
                          tags$a(href = "https://fr.linkedin.com/school/isara-lyonavignon/", tags$img(src = "linkedin.png", style = "width: 70px; height:70px;"))
-                       )
+                       ),
+                       #Nouveau bouton crédits
+                       actionButton("credits", "Crédits", 
+                                    style="margin-top: 20px; background-color: #f39c12; color: white; font-weight: bold; border-radius: 15px; padding: 10px 20px; border: none;")
               )
   )
 )

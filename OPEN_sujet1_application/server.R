@@ -50,6 +50,15 @@ save_data <- function(data) {
 }
 
 server <- function(input, output, session) {
+  #Observer l'évènement de clic sur le bouton "En savoir plus" et ouvrir le pdf gestion de projet dans l'app
+  observeEvent(input$showPDF, {
+    output$ContenuPDF <- renderUI({
+      tags$embed(src = "Gestion_de_projet.pdf", type = "application/pdf", width = "100%", height = "600px")
+    })
+  })
+  
+  
+  
   # Liste des identifiants et mots de passe autorisés
   credentials <- data.frame(
     id = c("admin1", "admin2"),
@@ -74,13 +83,80 @@ server <- function(input, output, session) {
       updateTextInput(session, "admin_id", value = "")
       updateTextInput(session, "admin_pass", value = "")
       
-      updateTabsetPanel(session, "monOnglet", selected = "Privé")
-      
     } else {
       output$login_message <- renderText("Identifiant ou mot de passe incorrect.")
     }
   })
   
+  # Observer l'événement d'ajout d'un membre
+  observeEvent(input$add_person, {
+    req(input$new_nom, input$new_prenom, input$new_adresse)
+    
+    new_data <- data.frame(
+      Nom = input$new_nom,
+      Prénom = input$new_prenom,
+      Adresse = input$new_adresse,
+      stringsAsFactors = FALSE
+    ) %>%
+      geocode(address = Adresse, method = "osm")
+    
+    if (!is.na(new_data$lat) & !is.na(new_data$long)) {
+      df <<- bind_rows(df, new_data)
+      write_xlsx(df, "Base_de_données.xlsx")
+      
+      output$add_person_message <- renderText("✅ Membre ajouté avec succès !")
+      
+      leafletProxy("map") %>%
+        clearMarkers() %>%
+        addMarkers(
+          lng = df$long,
+          lat = df$lat,
+          popup = paste0(
+            "<b>📌 Nom :</b> ", df$Nom, "<br>",
+            "<b>🙍 Prénom :</b> ", df$Prénom, "<br>",
+            "<b>📍 Adresse :</b> ", df$Adresse
+          )
+        )
+    } else {
+      output$add_person_message <- renderText("⚠️ Impossible de géocoder cette adresse.")
+    }
+  })
+  
+  
+  output$private_mdp <- renderUI({
+    if (user_authenticated()) {
+      fluidPage(
+        tags$h3("Appyez ici pour vous deconnecter"),
+        # Ajoutez ici le contenu privé que vous voulez afficher
+        actionButton("logout", "Déconnexion", 
+                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"),
+        titlePanel("Carte"),
+        wellPanel(
+          textInput("new_nom", "Nom :", ""),
+          textInput("new_prenom", "Prénom :", ""),
+          textInput("new_adresse", "Adresse :", ""),
+          actionButton("add_person", "Ajouter un membre", class = "btn btn-success")
+        ),
+        leafletOutput("map", height = "600px"),
+        textOutput("add_person_message")
+        
+      )
+    } else {
+      fluidPage(
+        textInput("admin_id", "Identifiant :", ""),
+        passwordInput("admin_pass", "Mot de passe :"),
+        actionButton("admin_login", "Se connecter", 
+                     style = "margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"
+        ),
+        textOutput("login_message")
+      )
+    }
+  })
+  
+  observeEvent(input$logout, {
+    user_authenticated(FALSE)  # Déconnecte l'utilisateur
+    output$login_message <- renderText("Vous avez été déconnecté.")  # Message de confirmation
+  })
   
   
   # Rendre l'interface privée visible une fois l'utilisateur authentifié
@@ -88,13 +164,11 @@ server <- function(input, output, session) {
     if (user_authenticated()) {
       fluidPage(
         tags$h3("Bienvenue dans l'espace Privé"),
-        tags$p("C'est l'espace réservé aux administrateurs."),
         # Ajoutez ici le contenu privé que vous voulez afficher
         tags$p("Vous pouvez gérer les utilisateurs, consulter des rapports, etc.")
       )
     } else {
       fluidPage(
-        tags$h3("Espace Privé"),
         tags$p("Veuillez vous connecter pour accéder à cet espace.")
       )
     }
@@ -157,6 +231,24 @@ server <- function(input, output, session) {
     }
   })
   
+  # Mise à jour des marqueurs en cas de sélection d'une personne
+  observeEvent(input$selected_person, {
+    selected_data <- df[df$Nom == input$selected_person, ]
+    
+    if (nrow(selected_data) > 0) {
+      leafletProxy("map") %>%
+        clearMarkers() %>%
+        addMarkers(
+          lng = selected_data$long,
+          lat = selected_data$lat,
+          popup = paste0(
+            "<b>📌 Nom :</b> ", selected_data$Nom, "<br>",
+            "<b>🙍 Prénom :</b> ", selected_data$Prénom, "<br>",
+            "<b>📍 Adresse :</b> ", selected_data$Adresse
+          )
+        )
+    }
+  })
   
   # Mise à jour des marqueurs
   observe({
