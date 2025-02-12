@@ -79,6 +79,24 @@ server <- function(input, output, session) {
     }
   })
   
+  output$private_mdp <- renderUI({
+    if (user_authenticated()) {
+      fluidPage(
+        tags$h3(""),
+        # Ajoutez ici le contenu privé que vous voulez afficher
+      )
+    } else {
+      fluidPage(
+        textInput("admin_id", "Identifiant :", ""),
+        passwordInput("admin_pass", "Mot de passe :"),
+        actionButton("admin_login", "Se connecter", 
+                     style = "margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"
+        ),
+        textOutput("login_message")
+      )
+    }
+  })
+  
   
   
   # Rendre l'interface privée visible une fois l'utilisateur authentifié
