@@ -74,13 +74,35 @@ server <- function(input, output, session) {
       updateTextInput(session, "admin_id", value = "")
       updateTextInput(session, "admin_pass", value = "")
       
-      updateTabsetPanel(session, "monOnglet", selected = "Privé")
-      
     } else {
       output$login_message <- renderText("Identifiant ou mot de passe incorrect.")
     }
   })
   
+  output$private_mdp <- renderUI({
+    if (user_authenticated()) {
+      fluidPage(
+        tags$h3("Appyez ici pour vous deconnecter"),
+        # Ajoutez ici le contenu privé que vous voulez afficher
+        actionButton("logout", "Déconnexion", 
+                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+      )
+    } else {
+      fluidPage(
+        textInput("admin_id", "Identifiant :", ""),
+        passwordInput("admin_pass", "Mot de passe :"),
+        actionButton("admin_login", "Se connecter", 
+                     style = "margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"
+        ),
+        textOutput("login_message")
+      )
+    }
+  })
+  
+  observeEvent(input$logout, {
+    user_authenticated(FALSE)  # Déconnecte l'utilisateur
+    output$login_message <- renderText("Vous avez été déconnecté.")  # Message de confirmation
+  })
   
   
   # Rendre l'interface privée visible une fois l'utilisateur authentifié
@@ -88,13 +110,11 @@ server <- function(input, output, session) {
     if (user_authenticated()) {
       fluidPage(
         tags$h3("Bienvenue dans l'espace Privé"),
-        tags$p("C'est l'espace réservé aux administrateurs."),
         # Ajoutez ici le contenu privé que vous voulez afficher
         tags$p("Vous pouvez gérer les utilisateurs, consulter des rapports, etc.")
       )
     } else {
       fluidPage(
-        tags$h3("Espace Privé"),
         tags$p("Veuillez vous connecter pour accéder à cet espace.")
       )
     }
