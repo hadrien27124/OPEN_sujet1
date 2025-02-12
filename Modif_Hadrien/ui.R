@@ -137,11 +137,8 @@ ui <- fluidPage(
               
               tabPanel("Carte", 
                        titlePanel("Carte"),
-                       numericInput("latitude", "Latitude :", value = 48.8566, min = -90, max = 90),
-                       numericInput("longitude", "Longitude :", value = 2.3522, min = -180, max = 180),
                        selectInput("selected_person", "Sélectionner une personne :", choices = df$Nom, selected = NULL),
                        
-                       actionButton("add_marker", "Ajouter un marqueur"),
                        actionButton("reset_map", "Réinitialiser la carte"),
                        tags$div("Carte interactive", id = "carte"),
                        leafletOutput("map", height = "600px")
@@ -149,9 +146,8 @@ ui <- fluidPage(
               
               tabPanel("Administrateur", 
                        tags$div("Espace Administrateur", id = "administrateur"),
-                       tags$div("Interface réservée aux administrateurs", 
-                                style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
-                       ),
+                       uiOutput("private_panel"),
+  
                        textInput("admin_id", "Identifiant :", ""),
                        passwordInput("admin_pass", "Mot de passe :"),
                        actionButton("admin_login", "Se connecter", 
@@ -160,10 +156,7 @@ ui <- fluidPage(
                        textOutput("login_message")  # pour afficher le message
               ),
               
-              tabPanel("Privé",  # Onglet privé
-                       uiOutput("private_panel")  # Contenu dynamique (UI réactif) pour l'interface privée
-              ),
-              
+            
               tabPanel("Contact", 
                        tags$div("Informations de contact", id = "contact"),
                        fluidRow(

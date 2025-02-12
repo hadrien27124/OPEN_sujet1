@@ -74,8 +74,6 @@ server <- function(input, output, session) {
       updateTextInput(session, "admin_id", value = "")
       updateTextInput(session, "admin_pass", value = "")
       
-      updateTabsetPanel(session, "monOnglet", selected = "Privé")
-      
     } else {
       output$login_message <- renderText("Identifiant ou mot de passe incorrect.")
     }
@@ -88,13 +86,11 @@ server <- function(input, output, session) {
     if (user_authenticated()) {
       fluidPage(
         tags$h3("Bienvenue dans l'espace Privé"),
-        tags$p("C'est l'espace réservé aux administrateurs."),
         # Ajoutez ici le contenu privé que vous voulez afficher
         tags$p("Vous pouvez gérer les utilisateurs, consulter des rapports, etc.")
       )
     } else {
       fluidPage(
-        tags$h3("Espace Privé"),
         tags$p("Veuillez vous connecter pour accéder à cet espace.")
       )
     }
@@ -109,9 +105,21 @@ server <- function(input, output, session) {
     markers(rbind(markers(), new_marker))  # Ajout du nouveau marqueur
   })
   
-  # Réinitialiser la carte (supprimer tous les marqueurs)
+  # Réinitialiser la carte (afficher tous les marqueurs avec leurs coordonnées)
   observeEvent(input$reset_map, {
-    markers(data.frame(lng = numeric(), lat = numeric()))  # Réinitialisation des marqueurs
+    # Effacer les marqueurs existants
+    leafletProxy("map") %>%
+      clearMarkers() %>%
+      addMarkers(data = df, 
+                 lng = ~long, 
+                 lat = ~lat, 
+                 popup = ~paste0(
+                   "<b>📌 Nom :</b> ", df$Nom, "<br>",
+                   "<b>🙍 Prénom :</b> ", df$Prénom, "<br>",
+                   "<b>📍 Adresse :</b> ", df$Adresse, "<br>",
+                   "<b>📍 Coordonnée Longitude :</b> ", df$long, "<br>",
+                   "<b>📍 Coordonnée Latitude :</b> ", df$lat
+                 ))
   })
   
   #Affichage de la carte
