@@ -7,49 +7,105 @@ library(dplyr)
 df <- read_excel("Base_de_données.xlsx")
 
 ui <- fluidPage(
+  tags$head(
+    tags$style(HTML("
+    
+    @font-face {
+      font-family: 'Explora';
+      src: url('Explora.ttf') format('truetype');
+    }
+    
+    @font-face {
+      font-family: 'ContrailOne';
+      src: url('ContrailOne.ttf') format('truetype');
+    }
+    
+    @keyframes rebond {
+      0% {transform: translateY(0);}
+      30% {transform: translateY(-5px);}
+      50% {transform: translateY(2px);}
+      70% {transform: translateY(-2px);}
+      100% {transform: translateY(0);}
+    }
+    
+    .header {
+      position: relative;
+      background-color: #1f5014 !important;
+      height: 100px !important;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      border-radius: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .header img {
+      height: 80px;
+      width: auto;
+      margin-right: 225px;
+      margin-left: 20px;
+    }
+    
+    .header-title {
+      font-family: 'Explora';
+      font-size: 48px;
+      color: #4b8644;
+    }
+                    ")
+               )
+    ),
   
   # Modification de la police et du style des onglets
   tags$style(HTML("
-    /* Modifier la barre d'onglets */
-    .nav-tabs > li > a {
-        font-family: 'Roboto';
-        font-size: 18px;
-        font-weight: bold;
-        color: white;
-        background-color: darkgray;
-        border-radius: 10px 10px 0 0;
-        padding: 10px 20px;
-    }
+  
+/*Corps de l'app : couleur de fond*/
+  body { 
+        background-color: #c7e0a6 ;
+        margin-bottom: 30px;
+  }
+  
+/*Barre d'onglet*/
+  .nav-tabs > li > a {
+    font-family: 'ContrailOne';
+    font-size: 18px;
+    color: white;
+    background-color: #4b8644;
+    border-radius: 10px;
+    padding: 8px 20px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+  
+/*Bouton de l'onglet actif*/
+  .nav-tabs > li.active > a {
+    background-color: #1f5014;
+    color: white;
+    border-bottom: 3px solid #4b8644;
+  }
+  
+/*Survol de la barre d'onglet*/
+  .nav-tabs > li > a:hover {
+    animation: rebond 0.6s ease;
+    background-color: #1f5014 ;
+  }
 
-    /* Modifier l'onglet actif (FORCÉ en vert) */
-    .nav-tabs > li.active > a {
-      background-color: mediumseagreen !important;
-      color: white !important;
-      border-bottom: 3px solid red !important;
-    }
-
-    /* Modifier l'onglet en survolant */
-    .nav-tabs > li > a:hover {
-        background-color: lightgray;
-        color: black;
-    }
-
-    /* Modifier la barre de fond et l'ombre des onglets */
-    .nav-tabs {
-        border-bottom: 2px solid #ccc; /* bordure en bas */
-    }
-    
-    .nav-tabs > li > a {
+/*bordures de la barre d'onglet*/
+  .nav-tabs {
+    border-top: 2px solid #4b8644;
+    border-bottom: 2px solid #4b8644;
+  }
+  
+  
+  .nav-tabs > li > a {
         border: 1px solid #ccc; /* contour fin */
         box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Ajoute une ombre */
     }
     
-    /* Arrière-plan de l'application */
-    body {
-        background-color: #f5f5f5; /* Gris clair */
-    }
+
     
-    /* Contenu des onglets avec bordure et ombre */
+#Contenu des onglet, bordure et ombres
     .tab-content {
         background-color: white;
         padding: 20px;
@@ -58,16 +114,6 @@ ui <- fluidPage(
         margin-top: 10px;
     }
     
-    #titre1 {
-        font-family: 'Roboto';
-        font-size: 40px;
-        color: mediumseagreen; /* Couleur pour le titre */
-        font-weight: bold;
-        text-align: center;
-        padding-bottom: 10px;
-        border-bottom: 3px solid mediumseagreen;
-    }
-
     #presentation, #carte, #contact, #administrateur {
         font-family: 'Roboto';
         font-size: 25px;
@@ -78,10 +124,11 @@ ui <- fluidPage(
 
   ")),
   
-  # Titre de l'application avec l'ID correct
-  titlePanel(tags$div("DigiSolidaire 🚀💡", id = "titre1")),
-  
-  # Séparation en onglets
+  tags$div(class="header",
+           tags$img(src="logo.png"),
+           tags$div("DigiSolidaire", class="header-title")),
+
+# Séparation en onglets
   tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
               tabPanel("Présentation", 
                        
@@ -169,7 +216,7 @@ ui <- fluidPage(
                          )
                        ),
                        tags$div(
-                         "Suivez-nous sur nos réseaux sociaux :", 
+                         "Suivez-nous sur nos réseaux sociaux:", 
                          style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
                        ),
                        tags$div(
