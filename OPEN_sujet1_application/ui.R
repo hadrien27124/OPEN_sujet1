@@ -130,9 +130,10 @@ ui <- fluidPage(
                          
                        ),
                        
-                       # Nouveau bouton "En savoir plus" pour télécharger un PDF
-                       downloadButton("pdfDownload", "En savoir plus",
-                                      style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+                       # Nouveau bouton "En savoir plus" pour afficher un PDF
+                       actionButton("showPDF", "En savoir plus",
+                                    style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"), 
+                       uiOutput("ContenuPDF")
               ),
               
               tabPanel("Carte", 

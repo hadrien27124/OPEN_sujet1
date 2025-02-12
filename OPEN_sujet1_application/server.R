@@ -50,6 +50,15 @@ save_data <- function(data) {
 }
 
 server <- function(input, output, session) {
+  #Observer l'évènement de clic sur le bouton "En savoir plus" et ouvrir le pdf gestion de projet dans l'app
+  observeEvent(input$showPDF, {
+    output$ContenuPDF <- renderUI({
+      tags$embed(src = "Gestion_de_projet.pdf", type = "application/pdf", width = "100%", height = "600px")
+    })
+  })
+  
+  
+  
   # Liste des identifiants et mots de passe autorisés
   credentials <- data.frame(
     id = c("admin1", "admin2"),
