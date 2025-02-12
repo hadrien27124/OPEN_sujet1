@@ -35,7 +35,7 @@ ui <- fluidPage(
     .header-title {
         font-family: 'Explora';
         font-size: 48px;
-        color: #4CAF50;
+        color: #4b8644;
       }
                       ")
                
