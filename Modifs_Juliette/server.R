@@ -57,8 +57,25 @@ server <- function(input, output, session) {
     })
   })
   
+  observeEvent(input$credits, {
+    showModal(modalDialog(
+      title = "Crédits",
+      size = "l",  # Taille de la fenêtre
+      easyClose = TRUE,  # Fermeture du modale en cliquant en dehors
+      footer = NULL,  # Pas de pied de page
+      tags$div(
+        # Contenu des crédits : texte, liens, etc.
+        h4("Développé par les étudiant en 4ème année de l'ISARA Lyon", style = "color: mediumseagreen;"),
+        p("Ce projet a été réalisé dans le cadre d'un module de perfectionnement en informatique par : Hadrien Schmitt, Esteban Faravellon, Sofiane Bouhamou, Clara Couston, Juliette Goudaert et Marie Sanchez."),
+        p("AJOUTER CE QUE CHACUN A FAIT")
+      )
+    )
+    )
+  }
+  )
   
-   # Liste des identifiants et mots de passe autorisés
+  
+  # Liste des identifiants et mots de passe autorisés
   credentials <- data.frame(
     id = c("admin1", "admin2"),
     pass = c("password1", "password2"),
@@ -82,13 +99,35 @@ server <- function(input, output, session) {
       updateTextInput(session, "admin_id", value = "")
       updateTextInput(session, "admin_pass", value = "")
       
-      updateTabsetPanel(session, "monOnglet", selected = "Privé")
-      
     } else {
       output$login_message <- renderText("Identifiant ou mot de passe incorrect.")
     }
   })
   
+  output$private_mdp <- renderUI({
+    if (user_authenticated()) {
+      fluidPage(
+        tags$h3("Appyez ici pour vous deconnecter"),
+        # Ajoutez ici le contenu privé que vous voulez afficher
+        actionButton("logout", "Déconnexion", 
+                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+      )
+    } else {
+      fluidPage(
+        textInput("admin_id", "Identifiant :", ""),
+        passwordInput("admin_pass", "Mot de passe :"),
+        actionButton("admin_login", "Se connecter", 
+                     style = "margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"
+        ),
+        textOutput("login_message")
+      )
+    }
+  })
+  
+  observeEvent(input$logout, {
+    user_authenticated(FALSE)  # Déconnecte l'utilisateur
+    output$login_message <- renderText("Vous avez été déconnecté.")  # Message de confirmation
+  })
   
   
   # Rendre l'interface privée visible une fois l'utilisateur authentifié
@@ -96,13 +135,11 @@ server <- function(input, output, session) {
     if (user_authenticated()) {
       fluidPage(
         tags$h3("Bienvenue dans l'espace Privé"),
-        tags$p("C'est l'espace réservé aux administrateurs."),
         # Ajoutez ici le contenu privé que vous voulez afficher
         tags$p("Vous pouvez gérer les utilisateurs, consulter des rapports, etc.")
       )
     } else {
       fluidPage(
-        tags$h3("Espace Privé"),
         tags$p("Veuillez vous connecter pour accéder à cet espace.")
       )
     }

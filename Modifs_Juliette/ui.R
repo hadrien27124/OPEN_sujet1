@@ -132,12 +132,9 @@ ui <- fluidPage(
                        
                        # Nouveau bouton "En savoir plus" pour afficher un PDF
                        actionButton("showPDF", "En savoir plus",
-                                      style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"), 
-                       uiOutput("ContenuPDF"),
-     
+                                    style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"), 
+                       uiOutput("ContenuPDF")
               ),
-             
-              
               
               tabPanel("Carte", 
                        titlePanel("Carte"),
@@ -150,20 +147,11 @@ ui <- fluidPage(
               
               tabPanel("Administrateur", 
                        tags$div("Espace Administrateur", id = "administrateur"),
-                       tags$div("Interface réservée aux administrateurs", 
-                                style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
-                       ),
-                       textInput("admin_id", "Identifiant :", ""),
-                       passwordInput("admin_pass", "Mot de passe :"),
-                       actionButton("admin_login", "Se connecter", 
-                                    style = "margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"
-                       ),
-                       textOutput("login_message")  # pour afficher le message
+                       uiOutput("private_panel"),
+                       uiOutput("private_mdp")
               ),
               
-              tabPanel("Privé",  # Onglet privé
-                       uiOutput("private_panel")  # Contenu dynamique (UI réactif) pour l'interface privée
-              ),
+
               
               tabPanel("Contact", 
                        tags$div("Informations de contact", id = "contact"),
@@ -181,7 +169,7 @@ ui <- fluidPage(
                          )
                        ),
                        tags$div(
-                         "Suivez-nous sur nos réseaux sociaux:", 
+                         "Suivez-nous sur nos réseaux sociaux :", 
                          style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
                        ),
                        tags$div(
@@ -189,7 +177,10 @@ ui <- fluidPage(
                          tags$a(href = "https://isara.fr/", tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")),
                          tags$a(href = "https://www.instagram.com/isara_lyonavignon/?hl=fr", tags$img(src = "instagram.png", style = "width: 50px; height:50px;")),
                          tags$a(href = "https://fr.linkedin.com/school/isara-lyonavignon/", tags$img(src = "linkedin.png", style = "width: 70px; height:70px;"))
-                       )
+                       ),
+                       #Nouveau bouton crédits
+                       actionButton("credits", "Crédits", 
+                                    style="margin-top: 20px; background-color: #f39c12; color: white; font-weight: bold; border-radius: 15px; padding: 10px 20px; border: none;")
               )
   )
 )
