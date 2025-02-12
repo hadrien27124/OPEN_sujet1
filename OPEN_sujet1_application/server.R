@@ -57,7 +57,22 @@ server <- function(input, output, session) {
     })
   })
   
-  
+  observeEvent(input$credits, {
+    showModal(modalDialog(
+      title = "Crédits",
+      size = "l",  # Taille de la fenêtre
+      easyClose = TRUE,  # Fermeture du modale en cliquant en dehors
+      footer = NULL,  # Pas de pied de page
+      tags$div(
+        # Contenu des crédits : texte, liens, etc.
+        h4("Développé par les étudiant en 4ème année de l'ISARA Lyon", style = "color: mediumseagreen;"),
+        p("Ce projet a été réalisé dans le cadre d'un module de perfectionnement en informatique par : Hadrien Schmitt, Esteban Faravellon, Sofiane Bouhamou, Clara Couston, Juliette Goudaert et Marie Sanchez."),
+        p("AJOUTER CE QUE CHACUN A FAIT")
+      )
+    )
+    )
+  }
+  )
   
   # Liste des identifiants et mots de passe autorisés
   credentials <- data.frame(
