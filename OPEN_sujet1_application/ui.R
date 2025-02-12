@@ -177,7 +177,10 @@ ui <- fluidPage(
                          tags$a(href = "https://isara.fr/", tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")),
                          tags$a(href = "https://www.instagram.com/isara_lyonavignon/?hl=fr", tags$img(src = "instagram.png", style = "width: 50px; height:50px;")),
                          tags$a(href = "https://fr.linkedin.com/school/isara-lyonavignon/", tags$img(src = "linkedin.png", style = "width: 70px; height:70px;"))
-                       )
+                       ),
+                       #Nouveau bouton crédits
+                       actionButton("credits", "Crédits", 
+                                    style="margin-top: 20px; background-color: #f39c12; color: white; font-weight: bold; border-radius: 15px; padding: 10px 20px; border: none;")
               )
   )
 )
