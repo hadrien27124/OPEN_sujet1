@@ -8,6 +8,40 @@ df <- read_excel("Base_de_données.xlsx")
 
 ui <- fluidPage(
   
+  tags$head(
+    tags$style(HTML("
+    
+  @font-face {
+    font-family: 'Explora';
+    src: url('Explora.ttf') format('truetype');    
+  }
+    
+    .header {
+        position: relative;
+        background-color: #1f5014 !important;
+        height: 100px !important;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+      
+    .header img {
+        height: 80px;
+        width: auto;
+        margin-right: 225px;
+        margin-left: 10px;
+      }
+      
+    .header-title {
+        font-family: 'Explora';
+        font-size: 48px;
+        color: #4b8644;
+      }
+                      ")
+               
+    )
+  ),
+  
   # Modification de la police et du style des onglets
   tags$style(HTML("
     /* Modifier la barre d'onglets */
@@ -58,16 +92,6 @@ ui <- fluidPage(
         margin-top: 10px;
     }
     
-    #titre1 {
-        font-family: 'Roboto';
-        font-size: 40px;
-        color: mediumseagreen; /* Couleur pour le titre */
-        font-weight: bold;
-        text-align: center;
-        padding-bottom: 10px;
-        border-bottom: 3px solid mediumseagreen;
-    }
-
     #presentation, #carte, #contact, #administrateur {
         font-family: 'Roboto';
         font-size: 25px;
@@ -78,9 +102,10 @@ ui <- fluidPage(
 
   ")),
   
-  # Titre de l'application avec l'ID correct
-  titlePanel(tags$div("DigiSolidaire 🚀💡", id = "titre1")),
-  
+  tags$div(class="header",
+           tags$img(src="logo.png"),
+           tags$div("DigiSolidaire", class="header-title")),
+
   # Séparation en onglets
   tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
               tabPanel("Présentation", 
