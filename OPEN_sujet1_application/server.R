@@ -59,7 +59,7 @@ server <- function(input, output, session) {
       footer = NULL,  # Pas de pied de page
       tags$div(
         # Utilisation d'un iframe pour afficher le PDF
-        tags$iframe(src = "Gestion_de_projet.pdf", width = "100%", height = "500px")
+        tags$iframe(src = "Gestion_de_projet.rmd", width = "100%", height = "500px")
       )
     ))
   })
