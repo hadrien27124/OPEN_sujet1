@@ -88,13 +88,58 @@ server <- function(input, output, session) {
     }
   })
   
+  # Observer l'événement d'ajout d'un membre
+  observeEvent(input$add_person, {
+    req(input$new_nom, input$new_prenom, input$new_adresse)
+    
+    new_data <- data.frame(
+      Nom = input$new_nom,
+      Prénom = input$new_prenom,
+      Adresse = input$new_adresse,
+      stringsAsFactors = FALSE
+    ) %>%
+      geocode(address = Adresse, method = "osm")
+    
+    if (!is.na(new_data$lat) & !is.na(new_data$long)) {
+      df <<- bind_rows(df, new_data)
+      write_xlsx(df, "Base_de_données.xlsx")
+      
+      output$add_person_message <- renderText("✅ Membre ajouté avec succès !")
+      
+      leafletProxy("map") %>%
+        clearMarkers() %>%
+        addMarkers(
+          lng = df$long,
+          lat = df$lat,
+          popup = paste0(
+            "<b>📌 Nom :</b> ", df$Nom, "<br>",
+            "<b>🙍 Prénom :</b> ", df$Prénom, "<br>",
+            "<b>📍 Adresse :</b> ", df$Adresse
+          )
+        )
+    } else {
+      output$add_person_message <- renderText("⚠️ Impossible de géocoder cette adresse.")
+    }
+  })
+  
+  
   output$private_mdp <- renderUI({
     if (user_authenticated()) {
       fluidPage(
         tags$h3("Appyez ici pour vous deconnecter"),
         # Ajoutez ici le contenu privé que vous voulez afficher
         actionButton("logout", "Déconnexion", 
-                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"),
+        titlePanel("Carte"),
+        wellPanel(
+          textInput("new_nom", "Nom :", ""),
+          textInput("new_prenom", "Prénom :", ""),
+          textInput("new_adresse", "Adresse :", ""),
+          actionButton("add_person", "Ajouter un membre", class = "btn btn-success")
+        ),
+        leafletOutput("map", height = "600px"),
+        textOutput("add_person_message")
+        
       )
     } else {
       fluidPage(
