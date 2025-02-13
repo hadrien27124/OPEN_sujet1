@@ -67,24 +67,27 @@ server <- function(input, output, session) {
   
   observeEvent(input$credits, {
     showModal(modalDialog(
-      title = "Crédits",
+      title = tags$div("Crédits", style="font-family: Explora; font-size: 25px; color: #1f5014"),
+      style="font-family: Achieve; font-size: 13px; font-weight: bold; color: black",
       size = "l",  # Taille de la fenêtre
       easyClose = TRUE,  # Fermeture du modale en cliquant en dehors
       footer = NULL,  # Pas de pied de page
       tags$div(
         # Contenu des crédits : texte, liens, etc.
-        h4("Développé par des étudiants en 4ème année de l'ISARA-Lyon", style = "color: mediumseagreen;"),
+        h4("Développé par des étudiants en 4ème année de l'ISARA-Lyon", style = "font-family: ContrailOne; font-size: 22px; color: #4b8644;"),
         p("Ce projet a été réalisé dans le cadre d'un module de perfectionnement en informatique par : ", 
           tags$b("Hadrien Schmitt"), ", ", tags$b("Esteban Faravellon"), ", ", 
           tags$b("Sofiane Bouhamou"), ", ", tags$b("Clara Couston"), ", ", 
           tags$b("Juliette Goudaert"), " et ", tags$b("Marie Sanchez"), "."),
+        tags$br(),
         p("Les tâches ont été réparties de la manière suivante :"),
-        p(tags$b("Hadrien"), " : Implémentation de la carte intéractive, mise en place de l'onglet Contact avec son fonctionnement (formulaire et conditions de remplissage), mise en place des fonctionnalités de l'onglet Administrateurs avec la déconnection des membres via un bouton."),
-        p(tags$b("Clara"), " : Implémentation de la base de données (nom, prénom et adresse) avec géocodage en coordonnées pour affichage sur la carte, mise en place de l'onglet présentation avec texte et boutons."),
-        p(tags$b("Esteban"), " : Mise en place des boutons pop-up avec affichage des informations sur les personnes, mise en place de la fonctionnalité de la carte avec l'ajout des personnes dans l'onglet administrateur."),
-        p(tags$b("Marie"), " : Mise en place des différents onglets de l'interface avec les styles. Mise en place de l'onglet Administrateur avec le blocage d'accès avec identifiant et mot de passe."),
-        p(tags$b("Sofiane"), " : Mise en place de l'onglet Carte avec la liste déroulante et la réinitialisation des données sur la carte."),
-        p(tags$b("Juliette"), " : Ajustements de l'application avec l'esthétisme de l'interface, la fonctionnalité du bouton en savoir plus, les crédits dans l'onglet Contact."),
+        tags$ul(
+          tags$li(p(tags$b(tags$u("Hadrien")), " : Implémentation de la carte intéractive, mise en place de l'onglet Contact avec son fonctionnement (formulaire et conditions de remplissage), mise en place des fonctionnalités de l'onglet Administrateurs avec la déconnection des membres via un bouton.")),
+          tags$li(p(tags$b(tags$u("Clara")), " : Implémentation de la base de données (nom, prénom et adresse) avec géocodage en coordonnées pour affichage sur la carte, mise en place de l'onglet présentation avec texte et boutons.")),
+          tags$li(p(tags$b(tags$u("Esteban")), " : Mise en place des boutons pop-up avec affichage des informations sur les personnes, mise en place de la fonctionnalité de la carte avec l'ajout des personnes dans l'onglet administrateur.")),
+          tags$li(p(tags$b(tags$u("Marie")), " : Mise en place des différents onglets de l'interface avec les styles. Mise en place de l'onglet Administrateur avec le blocage d'accès avec identifiant et mot de passe.")),
+          tags$li(p(tags$b(tags$u("Sofiane")), " : Mise en place de l'onglet Carte avec la liste déroulante et la réinitialisation des données sur la carte.")),
+          tags$li(p(tags$b(tags$u("Juliette")), " : Mise en place du design général de l'application et de l'esthétisme de l'interface, fonctionnalité du bouton en savoir plus, crédits dans l'onglet Contact."))),
         p("L'ensemble des membres ont contribué à la mise à jour et aux avancées de l'interface via l'outil GitHub."),
       )
     )
