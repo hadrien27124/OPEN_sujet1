@@ -157,7 +157,8 @@ server <- function(input, output, session) {
     if (user_authenticated()) {
       fluidPage(
         actionButton("logout", "Déconnexion", 
-                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;margin-right;"),
+                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;float:right;"),
+        br(""),
         titlePanel("Carte"),
         wellPanel(
           textInput("new_nom", "Nom :", ""),
