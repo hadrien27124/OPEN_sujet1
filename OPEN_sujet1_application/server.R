@@ -7,8 +7,6 @@ library(writexl)
 library(rsconnect)
 
 
-rsconnect::deployApp("C:/Hadrien/ISARA/OPEN/R_Module_1b/TD/OPEN_sujet1/OPEN_sujet1_application")
-
 # Charger le fichier Excel
 df <- read_excel("Base_de_données.xlsx")
 
