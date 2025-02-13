@@ -4,7 +4,10 @@ library(leaflet)
 library(tidygeocoder)
 library(dplyr)
 library(writexl)
+library(rsconnect)
 
+
+rsconnect::deployApp()
 
 # Charger le fichier Excel
 df <- read_excel("Base_de_données.xlsx")
