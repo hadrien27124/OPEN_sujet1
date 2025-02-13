@@ -156,10 +156,8 @@ server <- function(input, output, session) {
   output$private_mdp <- renderUI({
     if (user_authenticated()) {
       fluidPage(
-        tags$h3("Appuyez ici pour vous déconnecter"),
-        # Ajoutez ici le contenu privé que vous voulez afficher
         actionButton("logout", "Déconnexion", 
-                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"),
+                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;margin-right;"),
         titlePanel("Carte"),
         wellPanel(
           textInput("new_nom", "Nom :", ""),
@@ -193,9 +191,7 @@ server <- function(input, output, session) {
   output$private_panel <- renderUI({
     if (user_authenticated()) {
       fluidPage(
-        tags$h3("Bienvenue dans l'espace Privé"),
-        # Ajoutez ici le contenu privé que vous voulez afficher
-        tags$p("Vous pouvez gérer les utilisateurs en ajoutant des membres et les afficher sur la carte.")
+       
       )
     } else {
       fluidPage(
