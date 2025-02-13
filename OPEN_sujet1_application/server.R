@@ -8,6 +8,7 @@ library(rsconnect)
 
 
 
+
 # Charger le fichier Excel
 df <- read_excel("Base_de_données.xlsx")
 
