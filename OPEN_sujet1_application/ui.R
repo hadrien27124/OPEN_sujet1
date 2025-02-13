@@ -211,14 +211,18 @@ tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
                      uiOutput("ContenuPDF")
             ),
               
-              tabPanel("Carte", 
-                       titlePanel("Carte"),
-                       selectInput("selected_person", "Sélectionner une personne :", choices = df$Nom, selected = NULL),
-                      
-                       actionButton("reset_map", "Réinitialiser la carte"),
-                       tags$div("Carte interactive", id = "carte"),
-                       leafletOutput("map", height = "600px")
-              ),
+            tabPanel("Carte", 
+                     tags$h2("Carte",
+                             style="font-family: ContrailOne; font-size: 30px; color: #4b8644; text-align: center; border-top: 2px solid #4b8644; border-bottom: 2px solid #4b8644; padding: 10px; margin-bottom: 25px;"),
+                     tags$div(
+                       selectInput("selected_person", "Sélectionner une personne :", 
+                                   choices = df$Nom, selected = NULL),
+                       style = "font-family: ContrailOne; color: #1f5014; font-size: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 5px; width: fit-content; margin-left: 20px; margin-bottom: 20px",
+                       
+                       actionButton("reset_map", "Réinitialiser la carte")),
+                     tags$div("Carte interactive", id = "carte", style="font-family: Explora; font-size: 25px; color: #4b8644 ; margin-top: 35px; margin-bottom: 20px"),
+                     leafletOutput("map", height = "600px")
+            ),
               
               tabPanel("Administrateur", 
                        tags$div("Espace Administrateur", id = "administrateur"),
