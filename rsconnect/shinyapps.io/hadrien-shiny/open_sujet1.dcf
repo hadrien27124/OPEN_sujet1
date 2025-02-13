@@ -1,0 +1,10 @@
+name: open_sujet1
+title:
+username: hadrien-shiny
+account: hadrien-shiny
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13988550
+bundleId: 9793446
+url: https://hadrien-shiny.shinyapps.io/open_sujet1/
+version: 1
