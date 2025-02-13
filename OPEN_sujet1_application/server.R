@@ -53,7 +53,7 @@ server <- function(input, output, session) {
   #Observer l'évènement de clic sur le bouton "En savoir plus" et ouvrir le pdf gestion de projet dans l'app
   observeEvent(input$showPDF, {
     showModal(modalDialog(
-      title = "PDF - En savoir plus",
+      title = tags$span("En Savoir plus - Répartition des associations en France", style="font-family: Explora; font-size: 20px; color: #1f5014"),
       size = "l",  # Grande taille pour la modale
       easyClose = TRUE,  # Permet de fermer facilement la modale
       footer = NULL,  # Pas de pied de page

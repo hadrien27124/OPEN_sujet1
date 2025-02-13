@@ -7,20 +7,17 @@ library(dplyr)
 df <- read_excel("Base_de_données.xlsx")
 
 ui <- fluidPage(
-  
+# Style de l'entête
   tags$head(
     tags$style(HTML("
     
+    /*Import d'une police personnalisée*/
     @font-face {
       font-family: 'Explora';
       src: url('Explora.ttf') format('truetype');
     }
     
-    @font-face {
-      font-family: 'ContrailOne';
-      src: url('ContrailOne.ttf') format('truetype');
-    }
-    
+    /*Création de l'animation des boutons de la barre d'onglet*/
     @keyframes rebond {
       0% {transform: translateY(0);}
       30% {transform: translateY(-5px);}
@@ -29,6 +26,7 @@ ui <- fluidPage(
       100% {transform: translateY(0);}
     }
     
+    /*Style et position de l'entête*/
     .header {
       position: relative;
       background-color: #1f5014 !important;
@@ -39,8 +37,10 @@ ui <- fluidPage(
       border-radius: 20px;
       margin-top: 20px;
       margin-bottom: 20px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
     }
     
+    /*Position du logo*/
     .header img {
       height: 80px;
       width: auto;
@@ -48,6 +48,7 @@ ui <- fluidPage(
       margin-left: 20px;
     }
     
+    /*Style du titre*/
     .header-title {
       font-family: 'Explora';
       font-size: 48px;
@@ -57,8 +58,21 @@ ui <- fluidPage(
                )
     ),
   
-  # Modification de la police et du style des onglets
+
+# Style de la barre d'onglet et des onglets
   tags$style(HTML("
+  
+/*Import de polices personnalisées*/
+  @font-face {
+      font-family: 'ContrailOne';
+      src: url('ContrailOne.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Achieve';
+    src: url('Achieve.ttf') format('truetype');
+  }
+   
     
     /*Corps de l'app : couleur de fond*/
     body { 
@@ -66,7 +80,7 @@ ui <- fluidPage(
       margin-bottom: 30px;
     }
     
-    /* Modifier la barre d'onglets */
+    /* Style et position de la barre d'onglets */
     .nav-tabs > li > a {
       font-family: 'ContrailOne';
       font-size: 18px;
@@ -77,6 +91,7 @@ ui <- fluidPage(
       margin-right: 10px;
       margin-bottom: 15px;
       margin-top: 15px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.5); /* Ombre */
     }
 
     /*Bouton de l'onglet actif*/
@@ -98,12 +113,6 @@ ui <- fluidPage(
       border-bottom: 2px solid #4b8644;
     }
     
-    .nav-tabs > li > a {
-        border: 1px solid #ccc; /* contour fin */
-        box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Ajoute une ombre */
-    }
-    
-    
     /* Contenu des onglets avec bordure et ombre */
     .tab-content {
         background-color: white;
@@ -113,8 +122,8 @@ ui <- fluidPage(
         margin-top: 10px;
     }
     
-    #presentation, #carte, #contact, #administrateur {
-        font-family: 'Roboto';
+    #Presentation, #Carte, #contact, #administrateur {
+        font-family: 'ContrailOne';
         font-size: 25px;
         color: black;
         font-weight: 600;
@@ -123,64 +132,84 @@ ui <- fluidPage(
 
   ")),
   
+#Implémentation du titre et du logo dans l'entête
   tags$div(class="header",
            tags$img(src="logo.png"),
            tags$div("DigiSolidaire", class="header-title")),
 
   # Séparation en onglets
-  tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
-              tabPanel("Présentation", 
-                       
-                       # Section "Bienvenue chez DigiSolidaire"
-                       tags$div(
-                         tags$span("Bienvenue chez DigiSolidaire 🚀💡", id = "bienvenue"), 
-                         tags$br(),  # Saut de ligne
+tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
+            tabPanel("Présentation", 
+                     
+                     # Section "Bienvenue chez DigiSolidaire"
+                     tags$div(
+                       tags$span("Bienvenue chez DigiSolidaire", 
+                                 id = "bienvenue", 
+                                 style="font-family: ContrailOne; font-size: 25px; color: #4b8644; margin-top: 10px"), 
+                       tags$br(),  # Saut de ligne
+                       tags$br(),  # Saut de ligne
+                     ),
+                     
+                     # Section "Une association dédiée à l’inclusion numérique..."
+                     tags$div(
+                       tags$i("Une association dédiée à l’inclusion numérique, l’éducation digitale et l’accès aux nouvelles technologies pour tous.", 
+                              id = "presentation-italic", 
+                              style="font-family: Achieve; font-weight: bold; font-size: 13px; color: #1f5014; text-align: justify"),
+                       tags$br()  # Saut de ligne
+                     ),
+                     
+                     # Section "Notre association est engagée..."
+                     tags$div(
+                       "Notre association est engagée, nous œuvrons pour rendre les nouvelles technologies accessibles à tous en proposant des formations, des ateliers et un accompagnement personnalisé. Rejoignez-nous pour réduire la fracture numérique et construire un avenir digital solidaire !",
+                       id = "presentation-normal",
+                       style = "font-family: Achieve; font-weight: bold; font-size: 13px; color: #1f5014; text-align: justify; margin-bottom: 10px;",
+                       tags$br()
+                     ),
+                     
+                     # Bouton Contactez nous
+                     div(
+                       actionButton("start", "Contactez nous", 
+                                    style="margin-top: 10px; background-color: #4b8644; font-family: Explora; font-size: 16px; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"),
+                       style="text-align: center; margin-right: 30px"),
+                     
+                     # Nouveau bloc pour la présentation du projet
+                     tags$div(
+                       tags$br(),
+                       tags$h3("Présentation du projet : OPEN 2025", style = "font-family: ContrailOne; font-size: 25px; color: #4b8644;"),
+                       tags$p(
+                         "Notre projet vise à créer une application stable et fonctionnelle pour répertorier l'ensemble des membres d'une association. D'autres éléments pourront être ajoutés sur l'interface.",
+                         style = "font-family: Achieve; font-size: 15px; color: #1f5014; font-weight: bold; margin-top: 20px;"
                        ),
-                       
-                       # Section "Une association dédiée à l’inclusion numérique..."
+                       # Section "Présentation des onglets"
                        tags$div(
-                         tags$i("Une association dédiée à l’inclusion numérique, l’éducation digitale et l’accès aux nouvelles technologies pour tous.", id = "presentation-italic"),
-                         tags$br(),  # Saut de ligne
-                       ),
-                       
-                       # Section "Notre association est engagée..."
-                       tags$div(
-                         "Notre association est engagée, nous œuvrons pour rendre les nouvelles technologies accessibles à tous en proposant des formations, des ateliers et un accompagnement personnalisé. Rejoignez-nous pour réduire la fracture numérique et construire un avenir digital solidaire !",
-                         id = "presentation-normal",
-                         style = "margin-bottom: 10px;"
-                       ),
-                       
-                       # Bouton Contacter nous avant la présentation du projet
-                       actionButton("start", "Contacter nous", 
-                                    style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"),
-                       
-                       # Nouveau bloc pour la présentation du projet
-                       tags$div(
-                         tags$h3("Présentation du projet : OPEN 2025", style = "color: mediumseagreen;"),
-                         tags$p(
-                           "Notre projet vise à créer une application stable et fonctionnelle pour répertorier l'ensemble des membres d'une association. D'autres éléments pourront être ajoutés sur l'interface.",
-                           style = "font-size: 18px; color: black; font-weight: 500; margin-top: 20px;"
+                         tags$p("Vous pouvez retrouver sur cette application différents onglets :", style= "font-family: Achieve; font-size: 13px; font-weight: bold; color: #1f5014; margin-top: 20px"),
+                         tags$ul(
+                           tags$li(tags$u("Onglet Présentation"), 
+                                   ": Présente l'association, le projet et donne accès à diverses informations supplémentaires avec le bouton En savoir plus. Le bouton nous contacter redirige vers l'ongelt Contact.", 
+                                   style= "font-family: Achieve; font-size: 13px; font-weight: bold; color: #1f5014; margin-top: 20px"),
+                           tags$li(tags$u("Onglet Carte"), 
+                                   ": Représente sur une carte l'ensemble des membres de l'association renseignés dans une base de données. Une sélection via une liste à puce est possible. Une réinitialisation de la sélection est possible via un bouton.",
+                                   style="font-family: Achieve; font-size: 13px; font-weight: bold; color: #1f5014; margin-top: 20px"),
+                           tags$li(tags$u("Onglet Administrateur"), 
+                                   ": Uniquement réservé aux membres adminsitrateurs ayant un identifiant et un mot de passe valides. Cet onglet sert aux adminsitrateurs à renseigner des nouveaux membres dans la base de données et de les afficher sur la carte intéractive.",
+                                   style="font-family: Achieve; font-size: 13px; font-weight: bold; color: #1f5014; margin-top: 20px"),
+                           tags$li(tags$u("Onglet Contact"), 
+                                   ": Permet aux visiteurs de l'application d'envoyer un formulaire pour poser des questions. Les liens vers différents sites et réseaux sociaux sont également disponibles en bas de page. Un bouton crédit présente les membres ayant créer l'interface ainsi que leur répartition des tâches.",
+                                   style="font-family: Achieve; font-size: 13px; font-weight: bold; color: #1f5014; margin-top: 20px")
                          ),
-                         # Section "Présentation des onglets"
-                         tags$div(
-                           tags$p("Vous pouvez retrouver sur cette application différents onglets :"),
-                           tags$ul(
-                             tags$li("Onglet Présentation : Présente l'association, le projet et donne accès à diverses informations supplémentaires avec le bouton En savoir plus. Le bouton nous contacter redirige vers l'ongelt Contact."),
-                             tags$li("Onglet Carte : Représente sur une carte l'ensemble des membres de l'association renseignés dans une base de données. Une sélection via une liste à puce est possible. Une réinitialisation de la sélection est possible via un bouton."),
-                             tags$li("Onglet Administrateur : Uniquement réservé aux membres adminsitrateurs ayant un identifiant et un mot de passe valides. Cet onglet sert aux adminsitrateurs à renseigner des nouveaux membres dans la base de données et de les afficher sur la carte intéractive."),
-                             tags$li("Onglet Contact : Permet aux visiteurs de l'application d'envoyer un formulaire pour poser des questions. Les liens vers différents sites et réseaux sociaux sont également disponibles en bas de page. Un bouton crédit présente les membres ayant créer l'interface ainsi que leur répartition des tâches.")
-                           ),
-                           id = "presentation-normal",
-                           style = "margin-bottom: 10px;"
-                         )
-                         
-                       ),
+                         id = "presentation-normal",
+                         style = "margin-bottom: 20px;"
+                       )
                        
-                       # Nouveau bouton "En savoir plus" pour afficher un PDF
-                       actionButton("showPDF", "En savoir plus",
-                                    style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"), 
-                       uiOutput("ContenuPDF")
-              ),
+                     ),
+                     
+                     # Nouveau bouton "En savoir plus" pour afficher un PDF
+                     div(actionButton("showPDF", 
+                                      "En savoir plus",
+                                      style="margin-top: 10px; background-color: #4b8644; font-family: Explora; font-size: 16px; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"),
+                         style="text-align: center"), 
+                     uiOutput("ContenuPDF")
+            ),
               
               tabPanel("Carte", 
                        titlePanel("Carte"),
