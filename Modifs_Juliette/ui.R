@@ -225,31 +225,30 @@ tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
               ),
               
               tabPanel("Administrateur", 
-                       tags$div("Espace Administrateur", id = "administrateur"),
-                       uiOutput("private_panel"),
-                       uiOutput("private_mdp")
+                       tags$div("Espace Administrateur", id = "administrateur", style="font-family: ContrailOne; font-size: 25px; color: #4b8644; margin-bottom: 20px" ),
+                       tags$div(uiOutput("private_panel"),style="font-family: Achieve; font-size: 13px; font-weight: bold; color: #1f5014; margin-bottom: 20px"),
+                       tags$div(uiOutput("private_mdp"),style = "font-family: ContrailOne; color: #1f5014; font-size: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 5px; width: 90%; margin-left: 20px; margin-bottom: 20px"),
               ),
               
-
               
               tabPanel("Contact", 
-                       tags$div("Informations de contact", id = "contact"),
+                       tags$div("Informations de contact", id = "contact", style="font-family: ContrailOne; font-size: 25px; color: #4b8644; margin-bottom: 35px"),
                        fluidRow(
                          column(6, offset = 3,
-                                textInput("name", "Nom : *", ""),
-                                textInput("email", "Email : *", ""),
-                                textAreaInput("message", "Message : *", "", rows = 4),
+                                tags$div(textInput("name", "Nom : *", ""), style="font-family: Explora; font-size: 15px; color: #1f5014"),
+                                tags$div(textInput("email", "Email : *", ""),style="font-family: Explora; font-size: 15px; color: #1f5014"),
+                                tags$div(textAreaInput("message", "Message : *", "", rows = 4),style="font-family: Explora; font-size: 15px; color: #1f5014"),
                                 tags$div(
                                   tags$span("Les champs suivi d'un * sont obligatoires", 
-                                            style = "font-style : italic; font-size: 12px"), 
+                                            style = "font-family: Achieve; font-weight: bold; color: #1f5014; font-style : italic; font-size: 10px"), 
                                 ),
                                 actionButton("send", "Envoyer", 
-                                             style="margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
+                                             style="margin-top: 10px; background-color: #4b8644; color: white; font-family: Explora; font-size: 17px; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;")
                          )
                        ),
                        tags$div(
                          "Suivez-nous sur nos réseaux sociaux:", 
-                         style = "text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;"
+                         style = "text-align: center; font-family: Achieve; color: #1f5014; font-size: 17px; font-weight: bold; margin-top: 50px;"
                        ),
                        tags$div(
                          style = "text-align: center; margin-top: 10px;",
@@ -257,9 +256,10 @@ tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
                          tags$a(href = "https://www.instagram.com/isara_lyonavignon/?hl=fr", tags$img(src = "instagram.png", style = "width: 50px; height:50px;")),
                          tags$a(href = "https://fr.linkedin.com/school/isara-lyonavignon/", tags$img(src = "linkedin.png", style = "width: 70px; height:70px;"))
                        ),
+                       
                        #Nouveau bouton crédits
                        actionButton("credits", "Crédits", 
-                                    style="margin-top: 20px; background-color: #f39c12; color: white; font-weight: bold; border-radius: 15px; padding: 10px 20px; border: none;")
+                                    style="color: #1f5014; font-weight: bold; border: none; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 5px; width: fit-content; margin-left: 20px; margin-bottom: 20px")
               )
   )
 )

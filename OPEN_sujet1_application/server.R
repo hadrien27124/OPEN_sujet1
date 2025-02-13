@@ -162,14 +162,14 @@ server <- function(input, output, session) {
     if (user_authenticated()) {
       fluidPage(
         actionButton("logout", "Déconnexion", 
-                     style="background-color: red; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;float:right;"),
+                     style="background-color: red; color: white; font-family: Explora; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;float:right;"),
         br(""),
         titlePanel("Carte"),
         wellPanel(
           textInput("new_nom", "Nom :", ""),
           textInput("new_prenom", "Prénom :", ""),
           textInput("new_adresse", "Adresse :", ""),
-          actionButton("add_person", "Ajouter un membre", class = "btn btn-success")
+          actionButton("add_person", "Ajouter un membre", class = "btn btn-success", style="font-family: Explora; background-color: #4b8644")
         ),
         leafletOutput("map", height = "600px"),
         textOutput("add_person_message")
@@ -180,7 +180,7 @@ server <- function(input, output, session) {
         textInput("admin_id", "Identifiant :", ""),
         passwordInput("admin_pass", "Mot de passe :"),
         actionButton("admin_login", "Se connecter", 
-                     style = "margin-top: 10px; background-color: mediumseagreen; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"
+                     style = "font-family: Explora; margin-top: 10px; background-color: #4b8644; color: white; font-weight: bold; border-radius: 5px; padding: 10px 20px; border: none;"
         ),
         textOutput("login_message")
       )
@@ -197,7 +197,7 @@ server <- function(input, output, session) {
   output$private_panel <- renderUI({
     if (user_authenticated()) {
       fluidPage(
-       
+        
       )
     } else {
       fluidPage(
