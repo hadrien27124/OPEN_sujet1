@@ -56,13 +56,15 @@ Livrable attendu : Une carte fonctionnelle avec l’affichage des associations e
 Livrable attendu : Fonctionnalité de conversion d’adresses, formulaire de saisie des coordonnées et interface améliorée.
 
 ## Étape 4 : Optimisation et ajouts avancés
+- Clara : Implémentation du texte et des boutons sur l'application
 - Sofiane : Amélioration de l’expérience utilisateur sur le bouton d’entrée des coordonnées.
 - Juliette : Finalisation de l’interface graphique.
 - Tous : Vérification de l’ergonomie, optimisation des performances et correction des bugs.
 
 Livrable attendu : Une application fluide, ergonomique et optimisée.
 
-## Étape 5 : Finalisation et présentation
+## Étape 5 : Finalisation po ur mise en ligne et présentation
+- Mise en ligne de l'application avec shinyapps.io
 - Tests finaux sur différents appareils.
 - Correction des derniers bugs et vérification des fonctionnalités.
 - Préparation de la présentation du projet.
