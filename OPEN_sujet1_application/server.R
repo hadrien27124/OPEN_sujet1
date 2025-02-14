@@ -84,7 +84,7 @@ server <- function(input, output, session) {
         tags$br(),
         p("Les tâches ont été réparties de la manière suivante :"),
         tags$ul(
-          tags$li(p(tags$b(tags$u("Hadrien")), " : Implémentation de la carte intéractive, mise en place de l'onglet Contact avec son fonctionnement (formulaire et conditions de remplissage), mise en place des fonctionnalités de l'onglet Administrateurs avec la déconnection des membres via un bouton.")),
+          tags$li(p(tags$b(tags$u("Hadrien")), " : Implémentation de la carte intéractive, mise en place de l'onglet Contact avec son fonctionnement (formulaire et conditions de remplissage), mise en place des fonctionnalités de l'onglet Administrateurs avec la déconnection des membres via un bouton. Déploiement de l'application sur Shinyapps.io")),
           tags$li(p(tags$b(tags$u("Clara")), " : Implémentation de la base de données (nom, prénom et adresse) avec géocodage en coordonnées pour affichage sur la carte, mise en place de l'onglet présentation avec texte et boutons.")),
           tags$li(p(tags$b(tags$u("Esteban")), " : Mise en place des boutons pop-up avec affichage des informations sur les personnes, mise en place de la fonctionnalité de la carte avec l'ajout des personnes dans l'onglet administrateur.")),
           tags$li(p(tags$b(tags$u("Marie")), " : Mise en place des différents onglets de l'interface avec les styles. Mise en place de l'onglet Administrateur avec le blocage d'accès avec identifiant et mot de passe.")),
