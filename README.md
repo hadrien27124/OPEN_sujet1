@@ -43,27 +43,31 @@ Livrable attendu : Un projet structuré avec un environnement de travail prêt.
 - Hadrien : Implémentation de la carte interactive avec leaflet et affichage des marqueurs.
 - Clara : Création du fichier de base de données contenant les associations.
 - Esteban : Développement des pop-ups affichant les informations des personnes associées.
-- Marie : Implémentation d’un bouton ouvrant une fiche d’information détaillée d’une association.
+- Juliette : Implémentation d’un bouton ouvrant une fiche d’information détaillée d’une association.
+- Marie : Mise en place des boutons et styles des onglets.
 
 Livrable attendu : Une carte fonctionnelle avec l’affichage des associations et ouverture des pop-ups.
 
 ## Étape 3 : Intégration et tests intermédiaires
 - Clara : Implémentation de la conversion d’adresse en coordonnées GPS via une API.
 - Sofiane : Ajout d’un bouton permettant d’entrer manuellement des coordonnées GPS.
+- Esteban : Codage des fonctions liées à la carte intéractive
+- Marie : Mise en place du mot de passe
 - Juliette : Début du travail sur l’esthétique de l’application.
 - Tous : Tests intermédiaires sur la carte, les pop-ups et la fiche d’information.
 
 Livrable attendu : Fonctionnalité de conversion d’adresses, formulaire de saisie des coordonnées et interface améliorée.
 
 ## Étape 4 : Optimisation et ajouts avancés
-- Clara : Implémentation du texte et des boutons sur l'application
+- Clara : Implémentation du texte et des boutons sur l'application.
 - Sofiane : Amélioration de l’expérience utilisateur sur le bouton d’entrée des coordonnées.
 - Juliette : Finalisation de l’interface graphique.
+- Hadrien : Mise en fonctionnement du mot de passe et de l'interface administrateur ainsi que de l'onglet contact.
 - Tous : Vérification de l’ergonomie, optimisation des performances et correction des bugs.
 
 Livrable attendu : Une application fluide, ergonomique et optimisée.
 
-## Étape 5 : Finalisation po ur mise en ligne et présentation
+## Étape 5 : Finalisation pour mise en ligne et présentation
 - Mise en ligne de l'application avec shinyapps.io
 - Tests finaux sur différents appareils.
 - Correction des derniers bugs et vérification des fonctionnalités.
