@@ -195,19 +195,6 @@ server <- function(input, output, session) {
   })
   
   
-  # Rendre l'interface privée visible une fois l'utilisateur authentifié
-  output$private_panel <- renderUI({
-    if (user_authenticated()) {
-      fluidPage(
-        
-      )
-    } else {
-      fluidPage(
-        tags$p("Veuillez vous connecter pour accéder à cet espace.")
-      )
-    }
-  })
-  
   # Création d'un objet réactif pour stocker les marqueurs
   markers <- reactiveVal(data.frame(lng = numeric(), lat = numeric()))
   
