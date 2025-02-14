@@ -255,7 +255,7 @@ tabsetPanel(id = "monOnglet",  # Ajout de l'identifiant
                        style = "text-align: center; margin-top: 10px;",
                        tags$a(href = "https://isara.fr/", tags$img(src = "logo_isara.jpg", style = "width: 50px; height:50px;")),
                        tags$a(href = "https://www.instagram.com/isara_lyonavignon/?hl=fr", tags$img(src = "instagram.png", style = "width: 50px; height:50px;")),
-                       tags$a(href = "https://fr.linkedin.com/school/isara-lyonavignon/", tags$img(src = "linkedin.png", style = "width: 70px; height:70px;"))
+                       tags$a(href = "https://fr.linkedin.com/school/isara-lyonavignon/", tags$img(src = "Linkedin.png", style = "width: 50px; height:50px;"))
                      ),
                      
                      #Nouveau bouton crédits
