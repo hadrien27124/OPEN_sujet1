@@ -5,6 +5,6 @@ account: hadrien-shiny
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 13988692
-bundleId: 9794213
+bundleId: 9799222
 url: https://hadrien-shiny.shinyapps.io/open_sujet1_application/
 version: 1

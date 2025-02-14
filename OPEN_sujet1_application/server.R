@@ -4,6 +4,8 @@ library(leaflet)
 library(tidygeocoder)
 library(dplyr)
 library(writexl)
+library(rsconnect)
+
 
 
 # Charger le fichier Excel
