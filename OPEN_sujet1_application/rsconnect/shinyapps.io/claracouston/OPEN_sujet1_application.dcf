@@ -5,7 +5,7 @@ account: claracouston
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 13999987
-bundleId: 9799413
+bundleId: 9799473
 url: https://claracouston.shinyapps.io/OPEN_sujet1_application/
 version: 1
 asMultiple: FALSE
