@@ -116,7 +116,6 @@ server <- function(input, output, session) {
     
     if (nrow(user) == 1) {
       user_authenticated(TRUE)
-      output$login_message <- renderText("Connexion réussie. Bienvenue!")
       
       updateTextInput(session, "admin_id", value = "")
       updateTextInput(session, "admin_pass", value = "")
