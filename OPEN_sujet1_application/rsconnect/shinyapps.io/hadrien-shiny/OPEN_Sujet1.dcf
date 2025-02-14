@@ -1,12 +1,12 @@
-name: open_sujet1_application
-title:
+name: OPEN_Sujet1
+title: OPEN_Sujet1
 username: hadrien-shiny
 account: hadrien-shiny
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
-appId: 13999807
+appId: 13999973
 bundleId:
-url: https://hadrien-shiny.shinyapps.io/open_sujet1_application/
+url: https://hadrien-shiny.shinyapps.io/OPEN_Sujet1/
 version: 1
 asMultiple: FALSE
 asStatic: FALSE
